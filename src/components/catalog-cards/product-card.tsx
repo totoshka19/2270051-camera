@@ -1,5 +1,6 @@
 import React from 'react';
 import { BaseProduct } from '../../types/product';
+import { formatPrice } from '../../utils';
 
 type ProductCardProps = {
   product: BaseProduct;
@@ -25,7 +26,7 @@ function ProductCard({ product }: ProductCardProps) {
           <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{product.reviewCount}</p>
         </div>
         <p className="product-card__title">{product.name}</p>
-        <p className="product-card__price"><span className="visually-hidden">Цена:</span>{product.price} ₽</p>
+        <p className="product-card__price"><span className="visually-hidden">Цена:</span>{formatPrice(product.price)}</p>
       </div>
       <div className="product-card__buttons">
         <button className="btn btn--purple product-card__btn" type="button">Купить</button>
