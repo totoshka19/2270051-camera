@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import {ApiRoute, RequestStatus, URL_API} from '../conts';
+import { ApiRoute, RequestStatus, URL_API } from '../conts';
 import { Product } from '../types/product';
 
 export const fetchProducts = createAsyncThunk<Product[]>(
@@ -38,7 +38,7 @@ const productsSlice = createSlice({
       })
       .addCase(fetchProducts.rejected, (state, action) => {
         state.status = RequestStatus.Failed;
-        state.error = action.error.message || 'Something went wrong';
+        state.error = action.error.message || 'Что-то пошло не так';
       });
   },
 });

@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import ProductCard from './product-card';
 import { fetchProducts } from '../../store/products-slice';
 import { AppDispatch, RootState } from '../../store/store';
+import { RequestStatus } from '../../conts';
 
 function ProductList() {
   const dispatch = useDispatch<AppDispatch>();
@@ -11,16 +12,16 @@ function ProductList() {
   const error = useSelector((state: RootState) => state.products.error);
 
   useEffect(() => {
-    if (status === 'idle') {
+    if (status === RequestStatus.Idle) {
       dispatch(fetchProducts());
     }
   }, [status, dispatch]);
 
-  if (status === 'loading') {
+  if (status === RequestStatus.Loading) {
     return <div>Получение списка товаров...</div>;
   }
 
-  if (status === 'failed') {
+  if (status === RequestStatus.Failed) {
     return <div>Ошибка: {error}</div>;
   }
 
