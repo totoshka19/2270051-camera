@@ -1,6 +1,7 @@
 import React from 'react';
 import { BaseProduct } from '../../types/product';
 import { formatPrice } from '../../utils';
+import { Link } from 'react-router-dom';
 
 type ProductCardProps = {
   product: BaseProduct;
@@ -18,7 +19,7 @@ function ProductCard({ product }: ProductCardProps) {
       <div className="product-card__info">
         <div className="rate product-card__rate">
           {Array.from({ length: 5 }).map((_, index) => (
-            <svg key={`${product.id}-star-${index < product.rating ? 'full' : 'empty'}`} width="17" height="16" aria-hidden="true">
+            <svg key={index} width="17" height="16" aria-hidden="true">
               <use xlinkHref={`#icon-${index < product.rating ? 'full-star' : 'star'}`}></use>
             </svg>
           ))}
@@ -30,7 +31,7 @@ function ProductCard({ product }: ProductCardProps) {
       </div>
       <div className="product-card__buttons">
         <button className="btn btn--purple product-card__btn" type="button">Купить</button>
-        <a className="btn btn--transparent" href="#">Подробнее</a>
+        <Link to={`/product/${product.id}`} className="btn btn--transparent">Подробнее</Link>
       </div>
     </div>
   );

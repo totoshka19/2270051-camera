@@ -1,10 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-import productsReducer from './products-slice';
+import rootReducer from './root-reducer';
 
 export const store = configureStore({
-  reducer: {
-    products: productsReducer,
-  },
+  reducer: rootReducer,
 });
 
 export type RootState = ReturnType<typeof store.getState>;
