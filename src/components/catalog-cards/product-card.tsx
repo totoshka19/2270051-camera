@@ -1,13 +1,24 @@
-import React from 'react';
-import { BaseProduct } from '../../types/product';
+import React, { useState } from 'react';
+import { Product } from '../../types/product';
 import { formatPrice } from '../../utils';
 import { Link } from 'react-router-dom';
+import PopUpContactMe from '../pop-up-contact-me';
 
 type ProductCardProps = {
-  product: BaseProduct;
+  product: Product;
 }
 
 function ProductCard({ product }: ProductCardProps) {
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  const handleBuyClick = () => {
+    setIsPopupOpen(true);
+  };
+
+  const handleClosePopup = () => {
+    setIsPopupOpen(false);
+  };
+
   return (
     <div className="product-card">
       <div className="product-card__img">
@@ -30,9 +41,10 @@ function ProductCard({ product }: ProductCardProps) {
         <p className="product-card__price"><span className="visually-hidden">Цена:</span>{formatPrice(product.price)}</p>
       </div>
       <div className="product-card__buttons">
-        <button className="btn btn--purple product-card__btn" type="button">Купить</button>
+        <button className="btn btn--purple product-card__btn" type="button" onClick={handleBuyClick}>Купить</button>
         <Link to={`/product/${product.id}`} className="btn btn--transparent">Подробнее</Link>
       </div>
+      {isPopupOpen && <PopUpContactMe product={product} onClose={handleClosePopup} />}
     </div>
   );
 }
