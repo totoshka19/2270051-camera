@@ -1,4 +1,6 @@
 import React from 'react';
+import dayjs from 'dayjs';
+import 'dayjs/locale/ru';
 import { Review } from '../../types/review';
 
 type ReviewItemProps = {
@@ -6,12 +8,7 @@ type ReviewItemProps = {
 };
 
 function ReviewItem({ review }: ReviewItemProps) {
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    const day = date.getDate();
-    const month = date.toLocaleString('ru-RU', { month: 'long' });
-    return `${day} ${month}`;
-  };
+  const formatDate = (dateString: string) => dayjs(dateString).locale('ru').format('DD MMMM');
 
   return (
     <li className="review-card">

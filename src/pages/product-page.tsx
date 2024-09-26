@@ -5,10 +5,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import Layout from '../components/layout';
 import ProductInfo from '../components/product/product-info';
 import ReviewList from '../components/product/review-list';
+import ScrollToTopButton from '../components/scroll-to-top-button';
 import { AppDispatch, RootState } from '../store/store';
 import { fetchProduct } from '../store/product-slice';
 import { fetchReviews } from '../store/reviews-slice';
-import { RequestStatus } from '../conts';
+import { NUMBER_OF_REVIEWS, RequestStatus } from '../conts';
 
 function ProductPage() {
   const { id } = useParams<{ id: string }>();
@@ -17,7 +18,7 @@ function ProductPage() {
   const reviews = useSelector((state: RootState) => state.reviews.reviews);
   const productStatus = useSelector((state: RootState) => state.product.status);
   const reviewsStatus = useSelector((state: RootState) => state.reviews.status);
-  const [visibleReviews, setVisibleReviews] = useState(3);
+  const [visibleReviews, setVisibleReviews] = useState(NUMBER_OF_REVIEWS);
 
   useEffect(() => {
     dispatch(fetchProduct(Number(id)));
@@ -25,7 +26,7 @@ function ProductPage() {
   }, [dispatch, id]);
 
   const handleShowMoreReviews = () => {
-    setVisibleReviews((prev) => prev + 3);
+    setVisibleReviews((prev) => prev + NUMBER_OF_REVIEWS);
   };
 
   if (productStatus === RequestStatus.Loading || reviewsStatus === RequestStatus.Loading) {
@@ -35,6 +36,10 @@ function ProductPage() {
   if (productStatus === RequestStatus.Failed || !product) {
     return <div>Ошибка получения информации о товаре</div>;
   }
+
+  const sortedReviews = [...reviews].sort((a, b) => new Date(b.createAt).getTime() - new Date(a.createAt).getTime());
+
+  const showMoreButton = sortedReviews.length > visibleReviews;
 
   return (
     <>
@@ -62,7 +67,8 @@ function ProductPage() {
                       </svg>
                     </a>
                   </li>
-                  <li className="breadcrumbs__item"><span className="breadcrumbs__link breadcrumbs__link--active">{product.name}</span>
+                  <li className="breadcrumbs__item">
+                    <span className="breadcrumbs__link breadcrumbs__link--active">{product.name}</span>
                   </li>
                 </ul>
               </div>
@@ -71,19 +77,15 @@ function ProductPage() {
               <ProductInfo product={product} />
             </div>
             <div className="page-content__section">
-              <ReviewList reviews={reviews.slice(0, visibleReviews)} onShowMore={handleShowMoreReviews} />
+              <ReviewList
+                reviews={sortedReviews.slice(0, visibleReviews)}
+                onShowMore={handleShowMoreReviews}
+                showMoreButton={showMoreButton}
+              />
             </div>
           </div>
         </main>
-        <a className="up-btn" href="#header" onClick={(e) => {
-          e.preventDefault();
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }}
-        >
-          <svg width="12" height="18" aria-hidden="true">
-            <use xlinkHref="#icon-arrow2"></use>
-          </svg>
-        </a>
+        <ScrollToTopButton />
       </Layout>
     </>
   );

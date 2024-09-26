@@ -34,3 +34,5 @@ export const ProductLevel = {
   Amateur: 'Любительский',
   Professional: 'Профессиональный',
 } as const;
+
+export const NUMBER_OF_REVIEWS = 3;
