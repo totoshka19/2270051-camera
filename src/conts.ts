@@ -2,6 +2,7 @@ export const URL_API = 'https://camera-shop.accelerator.htmlacademy.pro';
 
 export const ApiRoute = {
   Cameras: '/cameras',
+  Orders: '/orders',
 } as const;
 
 export const AppRoute = {
@@ -36,3 +37,7 @@ export const ProductLevel = {
 } as const;
 
 export const NUMBER_OF_REVIEWS = 3;
+
+export const ORDER_ERROR_MESSAGE = 'Ошибка при отправке заявки';
+
+export const PHONE_FORMAT_ERROR_MESSAGE = 'Введите номер в формате +7(9XX)XXX-XX-XX';

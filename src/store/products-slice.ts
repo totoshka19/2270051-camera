@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { ApiRoute, RequestStatus, URL_API } from '../conts';
 import { Product } from '../types/product';
+import { ProductsState } from '../types/state';
 
 export const fetchProducts = createAsyncThunk<Product[]>(
   'products/fetchProducts',
@@ -10,12 +11,6 @@ export const fetchProducts = createAsyncThunk<Product[]>(
     return response.data;
   }
 );
-
-type ProductsState = {
-  items: Product[];
-  status: typeof RequestStatus[keyof typeof RequestStatus];
-  error: string | null;
-}
 
 const initialState: ProductsState = {
   items: [],

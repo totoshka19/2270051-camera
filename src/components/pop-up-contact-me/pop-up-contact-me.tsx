@@ -1,8 +1,12 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import { Product } from '../../types/product';
 import { formatPhoneNumber, validatePhoneNumber } from '../../utils';
 import { usePopUp } from '../../hooks/use-pop-up';
 import ProductInfoShort from './product-info-short';
+import { useDispatch } from 'react-redux';
+import {createOrder} from '../../store/order-slice';
+import {unwrapResult} from '@reduxjs/toolkit';
+import {ORDER_ERROR_MESSAGE, PHONE_FORMAT_ERROR_MESSAGE} from '../../conts';
 
 type PopUpProps = {
   product: Product;
@@ -13,46 +17,31 @@ function PopUpContactMe({ product, onClose }: PopUpProps) {
   const phoneInputRef = useRef<HTMLInputElement | null>(null);
   const modalRef = useRef<HTMLDivElement | null>(null);
   const [phoneError, setPhoneError] = useState<string | null>(null);
-  const [isPhoneValid, setIsPhoneValid] = useState<boolean>(false);
+  const dispatch = useDispatch();
 
   const { handleOverlayClick } = usePopUp({ onClose, initialFocusRef: phoneInputRef, modalRef });
 
-  const handlePhoneChange = () => {
-    const phone = phoneInputRef.current?.value || '';
-    const isValid = validatePhoneNumber(phone);
-    setIsPhoneValid(isValid);
-    if (!isValid) {
-      setPhoneError('Укажите номер в формате +7(9XX)XXX-XX-XX');
-    } else {
-      setPhoneError(null);
-    }
-  };
-
-  const handleSubmit = () => {
+  const handleSubmitForm = () => {
     const phone = phoneInputRef.current?.value || '';
     if (!validatePhoneNumber(phone)) {
-      setPhoneError('Укажите номер в формате +7(9XX)XXX-XX-XX');
+      setPhoneError(PHONE_FORMAT_ERROR_MESSAGE);
       return;
     }
 
     const formattedPhone = formatPhoneNumber(phone);
-    console.log('Отправляем на сервер:', formattedPhone);
-    // Здесь можно добавить логику отправки данных на сервер
-    onClose();
-  };
+    try {
+      const resultAction = dispatch(createOrder({
+        camerasIds: [product.id],
+        coupon: null,
+        tel: formattedPhone,
+      }));
+      unwrapResult(resultAction);
 
-  useEffect(() => {
-    const phoneInput = phoneInputRef.current;
-    if (phoneInput) {
-      phoneInput.addEventListener('input', handlePhoneChange);
+      onClose();
+    } catch (error) {
+      setPhoneError(ORDER_ERROR_MESSAGE);
     }
-
-    return () => {
-      if (phoneInput) {
-        phoneInput.removeEventListener('input', handlePhoneChange);
-      }
-    };
-  }, []);
+  };
 
   return (
     <div className="modal is-active" ref={modalRef}>
@@ -83,8 +72,7 @@ function PopUpContactMe({ product, onClose }: PopUpProps) {
             <button
               className="btn btn--purple modal__btn modal__btn--fit-width"
               type="button"
-              onClick={handleSubmit}
-              disabled={!isPhoneValid}
+              onClick={handleSubmitForm}
             >
               <svg width="24" height="16" aria-hidden="true">
                 <use xlinkHref="#icon-add-basket"></use>

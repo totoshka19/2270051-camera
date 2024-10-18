@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { Review } from '../types/review';
 import {ApiRoute, RequestStatus, URL_API} from '../conts';
+import {ReviewsState} from '../types/state';
 
 export const fetchReviews = createAsyncThunk<Review[]>(
   'reviews/fetchReviews',
@@ -10,12 +11,6 @@ export const fetchReviews = createAsyncThunk<Review[]>(
     return response.data;
   }
 );
-
-type ReviewsState = {
-  reviews: Review[];
-  status: typeof RequestStatus[keyof typeof RequestStatus];
-  error: string | null;
-}
 
 const initialState: ReviewsState = {
   reviews: [],

@@ -3,7 +3,7 @@ export function formatPrice(price: number) {
 }
 
 export function validatePhoneNumber(phone: string) {
-  const phoneRegex = /^\+?[78]?[\s(]?\d{3}[\s)-]?\d{3}[\s-]?\d{2}[\s-]?\d{2}$/;
+  const phoneRegex = /^\+?[78][\s(]?9\d{2}[\s)-]?\d{3}[\s-]?\d{2}[\s-]?\d{2}$/;
   return phoneRegex.test(phone);
 }
 
@@ -15,7 +15,6 @@ export function formatPhoneNumber(phone: string) {
   } else if (cleaned.startsWith('7')) {
     cleaned = `+${ cleaned}`;
   }
-
   return cleaned;
 }
 
