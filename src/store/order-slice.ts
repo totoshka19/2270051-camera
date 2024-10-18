@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import {ApiRoute, URL_API, RequestStatus, ORDER_ERROR_MESSAGE} from '../conts';
+import { ApiRoute, URL_API, RequestStatus, ORDER_ERROR_MESSAGE } from '../conts';
 import { Order } from '../types/order';
 import { OrderState } from '../types/state';
 

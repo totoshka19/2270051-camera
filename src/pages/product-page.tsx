@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Layout from '../components/layout';
 import ProductInfo from '../components/product/product-info';
@@ -9,7 +9,7 @@ import ScrollToTopButton from '../components/scroll-to-top-button';
 import { AppDispatch, RootState } from '../store/store';
 import { fetchProduct } from '../store/product-slice';
 import { fetchReviews } from '../store/reviews-slice';
-import { NUMBER_OF_REVIEWS, RequestStatus } from '../conts';
+import { AppRoute, NUMBER_OF_REVIEWS, RequestStatus } from '../conts';
 
 function ProductPage() {
   const { id } = useParams<{ id: string }>();
@@ -30,11 +30,11 @@ function ProductPage() {
   };
 
   if (productStatus === RequestStatus.Loading || reviewsStatus === RequestStatus.Loading) {
-    return <div>Получение информации о товаре...</div>;
+    return <div className="container title title--h2">Получение информации о товаре...</div>;
   }
 
   if (productStatus === RequestStatus.Failed || !product) {
-    return <div>Ошибка получения информации о товаре</div>;
+    return <div className="container title title--h2">Ошибка получения информации о товаре</div>;
   }
 
   const sortedReviews = [...reviews].sort((a, b) => new Date(b.createAt).getTime() - new Date(a.createAt).getTime());
@@ -54,18 +54,18 @@ function ProductPage() {
               <div className="container">
                 <ul className="breadcrumbs__list">
                   <li className="breadcrumbs__item">
-                    <a className="breadcrumbs__link" href="/">Главная
+                    <Link className="breadcrumbs__link" to={AppRoute.Catalog}>Главная
                       <svg width="5" height="8" aria-hidden="true">
                         <use xlinkHref="#icon-arrow-mini"></use>
                       </svg>
-                    </a>
+                    </Link>
                   </li>
                   <li className="breadcrumbs__item">
-                    <a className="breadcrumbs__link" href="/catalog">Каталог
+                    <Link className="breadcrumbs__link" to={AppRoute.Catalog}>Каталог
                       <svg width="5" height="8" aria-hidden="true">
                         <use xlinkHref="#icon-arrow-mini"></use>
                       </svg>
-                    </a>
+                    </Link>
                   </li>
                   <li className="breadcrumbs__item">
                     <span className="breadcrumbs__link breadcrumbs__link--active">{product.name}</span>

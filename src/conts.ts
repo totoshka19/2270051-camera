@@ -7,7 +7,7 @@ export const ApiRoute = {
 
 export const AppRoute = {
   Catalog: '/',
-  Product: '/product/:id',
+  Camera: '/camera/:id',
   Basket: '/basket',
 } as const;
 

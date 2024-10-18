@@ -42,7 +42,7 @@ function ProductCard({ product }: ProductCardProps) {
       </div>
       <div className="product-card__buttons">
         <button className="btn btn--purple product-card__btn" type="button" onClick={handleBuyClick}>Купить</button>
-        <Link to={`/product/${product.id}`} className="btn btn--transparent">Подробнее</Link>
+        <Link to={`/camera/${product.id}`} className="btn btn--transparent">Подробнее</Link>
       </div>
       {isPopupOpen && <PopUpContactMe product={product} onClose={handleClosePopup} />}
     </div>
