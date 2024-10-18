@@ -4,12 +4,12 @@ import ProductCard from './product-card';
 import { fetchProducts } from '../../store/products-slice';
 import { AppDispatch, RootState } from '../../store/store';
 import { RequestStatus } from '../../conts';
+import Spinner from '../spinner';
 
 function ProductList() {
   const dispatch = useDispatch<AppDispatch>();
   const products = useSelector((state: RootState) => state.products.items);
   const status = useSelector((state: RootState) => state.products.status);
-  const error = useSelector((state: RootState) => state.products.error);
 
   useEffect(() => {
     if (status === RequestStatus.Idle) {
@@ -18,11 +18,11 @@ function ProductList() {
   }, [status, dispatch]);
 
   if (status === RequestStatus.Loading) {
-    return <div>Получение списка товаров...</div>;
+    return <Spinner loading error={false} />;
   }
 
   if (status === RequestStatus.Failed) {
-    return <div>Ошибка: {error}</div>;
+    return <Spinner loading={false} error />;
   }
 
   return (

@@ -38,6 +38,10 @@ export const ProductLevel = {
 
 export const NUMBER_OF_REVIEWS = 3;
 
+export const LOADING_MESSAGE = 'Получение списка товаров...';
+
+export const ERROR_MESSAGE = 'Не удалось получить список товаров, попробуйте позже';
+
 export const ORDER_ERROR_MESSAGE = 'Ошибка при отправке заявки';
 
 export const PHONE_FORMAT_ERROR_MESSAGE = 'Введите номер в формате +7(9XX)XXX-XX-XX';
