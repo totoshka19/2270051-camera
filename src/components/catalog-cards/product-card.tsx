@@ -6,9 +6,10 @@ import PopUpContactMe from '../pop-up-contact-me/pop-up-contact-me';
 
 type ProductCardProps = {
   product: Product;
+  className?: string;
 }
 
-function ProductCard({ product }: ProductCardProps) {
+function ProductCard({ product, className }: ProductCardProps) {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const handleBuyClick = () => {
@@ -20,11 +21,11 @@ function ProductCard({ product }: ProductCardProps) {
   };
 
   return (
-    <div className="product-card">
+    <div className={`product-card ${className || ''}`}>
       <div className="product-card__img">
         <picture>
-          <source type="image/webp" srcSet={`${product.previewImgWebp}, ${product.previewImgWebp2x} 2x`} />
-          <img src={product.previewImg} srcSet={`${product.previewImg2x} 2x`} width="280" height="240" alt={product.name} />
+          <source type="image/webp" srcSet={`/${product.previewImgWebp}, /${product.previewImgWebp2x} 2x`} />
+          <img src={`/${product.previewImg}`} srcSet={`/${product.previewImg2x} 2x`} width="280" height="240" alt={product.name} />
         </picture>
       </div>
       <div className="product-card__info">

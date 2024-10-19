@@ -10,8 +10,8 @@ function ProductInfoShort({ product }: ProductInfoProps) {
     <div className="basket-item basket-item--short">
       <div className="basket-item__img">
         <picture>
-          <source type="image/webp" srcSet={`${product.previewImgWebp}, ${product.previewImgWebp2x} 2x`} />
-          <img src={product.previewImg} srcSet={`${product.previewImg2x} 2x`} width="140" height="120" alt={product.name} />
+          <source type="image/webp" srcSet={`/${product.previewImgWebp}, /${product.previewImgWebp2x} 2x`} />
+          <img src={`/${product.previewImg}`} srcSet={`/${product.previewImg2x} 2x`} width="140" height="120" alt={product.name} />
         </picture>
       </div>
       <div className="basket-item__description">

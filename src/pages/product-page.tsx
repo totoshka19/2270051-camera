@@ -7,6 +7,7 @@ import ProductInfo from '../components/product/product-info';
 import ReviewList from '../components/product/review-list';
 import ScrollToTopButton from '../components/scroll-to-top-button';
 import Spinner from '../components/spinner';
+import ProductSimilar from '../components/product/product-similar';
 import { AppDispatch, RootState } from '../store/store';
 import { fetchProduct } from '../store/product-slice';
 import { fetchReviews } from '../store/reviews-slice';
@@ -82,16 +83,17 @@ function ProductPage() {
                 </ul>
               </div>
             </div>
-            <div className="page-content__section">
-              <ProductInfo product={product} />
-            </div>
-            <div className="page-content__section">
-              <ReviewList
-                reviews={sortedReviews.slice(0, visibleReviews)}
-                onShowMore={handleShowMoreReviews}
-                showMoreButton={showMoreButton}
-              />
-            </div>
+
+            <ProductInfo product={product} />
+
+            <ProductSimilar cameraId={product.id} />
+
+            <ReviewList
+              reviews={sortedReviews.slice(0, visibleReviews)}
+              onShowMore={handleShowMoreReviews}
+              showMoreButton={showMoreButton}
+            />
+
           </div>
         </main>
         <ScrollToTopButton />
