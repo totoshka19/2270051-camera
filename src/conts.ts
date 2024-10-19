@@ -45,3 +45,24 @@ export const ERROR_MESSAGE = 'Не удалось получить список 
 export const ORDER_ERROR_MESSAGE = 'Ошибка при отправке заявки';
 
 export const PHONE_FORMAT_ERROR_MESSAGE = 'Введите номер в формате +7(9XX)XXX-XX-XX';
+
+export const Slides = [
+  {
+    Image: './img/content/promo-look-54',
+    Title: 'Cannonball Pro MX 8i',
+    Description: 'Профессиональная камера от известного производителя',
+    Link: '/camera/3',
+  },
+  {
+    Image: './img/content/promo_click-lite-r',
+    Title: 'Ретрокамера Das Auge IV',
+    Description: 'Для истинных ценителей и коллекционеров',
+    Link: '/camera/1',
+  },
+  {
+    Image: './img/content/promo_click_pro',
+    Title: 'FastShot MR-5',
+    Description: 'Маленькое чудо фотографии',
+    Link: '/camera/2',
+  },
+];

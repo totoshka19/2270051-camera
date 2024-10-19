@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { formatPrice } from '../../utils';
 import { Product } from '../../types/product';
 

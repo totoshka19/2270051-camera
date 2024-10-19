@@ -1,12 +1,12 @@
-import React, {useRef, useState} from 'react';
+import { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { unwrapResult } from '@reduxjs/toolkit';
 import { Product } from '../../types/product';
 import { formatPhoneNumber, validatePhoneNumber } from '../../utils';
 import { usePopUp } from '../../hooks/use-pop-up';
 import ProductInfoShort from './product-info-short';
 import { createOrder } from '../../store/order-slice';
 import { ORDER_ERROR_MESSAGE, PHONE_FORMAT_ERROR_MESSAGE } from '../../conts';
+import { AppDispatch } from '../../store/store';
 
 type PopUpProps = {
   product: Product;
@@ -17,7 +17,7 @@ function PopUpContactMe({ product, onClose }: PopUpProps) {
   const phoneInputRef = useRef<HTMLInputElement | null>(null);
   const modalRef = useRef<HTMLDivElement | null>(null);
   const [phoneError, setPhoneError] = useState<string | null>(null);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   const { handleOverlayClick } = usePopUp({ onClose, initialFocusRef: phoneInputRef, modalRef });
 
@@ -30,12 +30,11 @@ function PopUpContactMe({ product, onClose }: PopUpProps) {
 
     const formattedPhone = formatPhoneNumber(phone);
     try {
-      const resultAction = dispatch(createOrder({
+      dispatch(createOrder({
         camerasIds: [product.id],
         coupon: null,
         tel: formattedPhone,
       }));
-      unwrapResult(resultAction);
 
       onClose();
     } catch (error) {

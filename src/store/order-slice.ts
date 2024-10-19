@@ -32,10 +32,11 @@ const orderSlice = createSlice({
       })
       .addCase(createOrder.fulfilled, (state) => {
         state.status = RequestStatus.Succeeded;
+        state.error = null;
       })
       .addCase(createOrder.rejected, (state, action) => {
         state.status = RequestStatus.Failed;
-        state.error = action.error.message;
+        state.error = action.error.message ? action.error.message : null;
       });
   },
 });

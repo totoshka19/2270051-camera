@@ -4,7 +4,7 @@ import { Product } from '../types/product';
 import { ApiRoute, RequestStatus, URL_API } from '../conts';
 import { ProductState } from '../types/state';
 
-export const fetchProduct = createAsyncThunk<Product>(
+export const fetchProduct = createAsyncThunk<Product, number>(
   'product/fetchProduct',
   async (cameraId: number) => {
     const response = await axios.get<Product>(`${URL_API}${ApiRoute.Cameras}/${cameraId}`);
@@ -33,7 +33,7 @@ const productSlice = createSlice({
       })
       .addCase(fetchProduct.rejected, (state, action) => {
         state.status = RequestStatus.Failed;
-        state.error = action.error.message;
+        state.error = action.error.message ? action.error.message : null;
       });
   },
 });
