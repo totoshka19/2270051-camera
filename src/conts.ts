@@ -38,9 +38,9 @@ export const ProductLevel = {
 
 export const NUMBER_OF_REVIEWS = 3;
 
-export const LOADING_MESSAGE = 'Получение списка товаров...';
+export const LOADING_MESSAGE = 'Идет загрузка...';
 
-export const ERROR_MESSAGE = 'Не удалось получить список товаров, попробуйте позже';
+export const ERROR_MESSAGE = 'Возникла ошибка, попробуйте позже';
 
 export const ORDER_ERROR_MESSAGE = 'Ошибка при отправке заявки';
 

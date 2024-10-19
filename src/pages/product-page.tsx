@@ -6,6 +6,7 @@ import Layout from '../components/layout';
 import ProductInfo from '../components/product/product-info';
 import ReviewList from '../components/product/review-list';
 import ScrollToTopButton from '../components/scroll-to-top-button';
+import Spinner from '../components/spinner';
 import { AppDispatch, RootState } from '../store/store';
 import { fetchProduct } from '../store/product-slice';
 import { fetchReviews } from '../store/reviews-slice';
@@ -30,11 +31,19 @@ function ProductPage() {
   };
 
   if (productStatus === RequestStatus.Loading || reviewsStatus === RequestStatus.Loading) {
-    return <div className="container title title--h2">Получение информации о товаре...</div>;
+    return (
+      <Layout>
+        <Spinner loading error={false} />
+      </Layout>
+    );
   }
 
   if (productStatus === RequestStatus.Failed || !product) {
-    return <div className="container title title--h2">Ошибка получения информации о товаре</div>;
+    return (
+      <Layout>
+        <Spinner loading={false} error />
+      </Layout>
+    );
   }
 
   const sortedReviews = [...reviews].sort((a, b) => new Date(b.createAt).getTime() - new Date(a.createAt).getTime());
