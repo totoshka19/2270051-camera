@@ -15,8 +15,8 @@ function Slider() {
       autoplay={{ delay: 3000 }}
       loop
     >
-      {Slides.map((slide, index) => (
-        <SwiperSlide key={index}>
+      {Slides.map((slide) => (
+        <SwiperSlide key={slide.Id}>
           <div className="banner">
             <picture>
               <source type="image/webp" srcSet={`${slide.Image}.webp, ${slide.Image}@2x.webp 2x`} />

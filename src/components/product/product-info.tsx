@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Rating from '../catalog-cards/rating';
 import { Product } from '../../types/product';
 import { formatPrice } from '../../utils';
 
@@ -25,15 +26,7 @@ function ProductInfo({ product }: ProductInfoProps) {
           </div>
           <div className="product__content">
             <h1 className="title title--h3">{product.name}</h1>
-            <div className="rate product__rate">
-              {Array.from({ length: 5 }).map((_, index) => (
-                <svg key={index} width="17" height="16" aria-hidden="true">
-                  <use xlinkHref={`#icon-${index < product.rating ? 'full-star' : 'star'}`}></use>
-                </svg>
-              ))}
-              <p className="visually-hidden">Рейтинг: {product.rating}</p>
-              <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{product.reviewCount}</p>
-            </div>
+            <Rating product={product} />
             <p className="product__price"><span className="visually-hidden">Цена:</span>{formatPrice(product.price)}</p>
             <button className="btn btn--purple" type="button">
               <svg width="24" height="16" aria-hidden="true">

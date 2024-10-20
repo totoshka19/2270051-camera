@@ -50,18 +50,21 @@ export const PHONE_FORMAT_ERROR_MESSAGE = 'Введите номер в форм
 
 export const Slides = [
   {
+    Id: 1,
     Image: './img/content/promo-look-54',
     Title: 'Cannonball Pro MX 8i',
     Description: 'Профессиональная камера от известного производителя',
     Link: '/camera/3',
   },
   {
+    Id: 2,
     Image: './img/content/promo_click-lite-r',
     Title: 'Ретрокамера Das Auge IV',
     Description: 'Для истинных ценителей и коллекционеров',
     Link: '/camera/1',
   },
   {
+    Id: 3,
     Image: './img/content/promo_click_pro',
     Title: 'FastShot MR-5',
     Description: 'Маленькое чудо фотографии',

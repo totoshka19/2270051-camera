@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import PopUpContactMe from '../pop-up-contact-me/pop-up-contact-me';
 import { Product } from '../../types/product';
+import Rating from './rating';
 import { formatPrice } from '../../utils';
 
 type ProductCardProps = {
@@ -29,15 +30,7 @@ function ProductCard({ product, className }: ProductCardProps) {
         </picture>
       </div>
       <div className="product-card__info">
-        <div className="rate product-card__rate">
-          {Array.from({ length: 5 }).map((_, index) => (
-            <svg key={index} width="17" height="16" aria-hidden="true">
-              <use xlinkHref={`#icon-${index < product.rating ? 'full-star' : 'star'}`}></use>
-            </svg>
-          ))}
-          <p className="visually-hidden">Рейтинг: {product.rating}</p>
-          <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{product.reviewCount}</p>
-        </div>
+        <Rating product={product} />
         <p className="product-card__title">{product.name}</p>
         <p className="product-card__price"><span className="visually-hidden">Цена:</span>{formatPrice(product.price)}</p>
       </div>
