@@ -7,7 +7,6 @@ type ReviewItemProps = {
 
 function ReviewItem({ review }: ReviewItemProps) {
 
-
   return (
     <li className="review-card">
       <div className="review-card__head">
