@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import PopUpContactMe from '../pop-up-contact-me/pop-up-contact-me';
 import { Product } from '../../types/product';
-import Rating from './rating';
+import Rating from '../rating/rating';
 import { formatPrice } from '../../utils';
 
 type ProductCardProps = {

@@ -37,3 +37,7 @@ export function getPrevIndex(currentIndex: number, slidesPerView: number): numbe
 export function sortReviewsByDate(reviews: Review[]): Review[] {
   return [...reviews].sort((a, b) => new Date(b.createAt).getTime() - new Date(a.createAt).getTime());
 }
+
+export function getRange(start: number, end: number): number[] {
+  return Array.from({ length: end - start + 1 }, (_, i) => start + i);
+}

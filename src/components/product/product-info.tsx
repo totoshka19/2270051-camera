@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Rating from '../catalog-cards/rating';
+import Rating from '../rating/rating';
 import { Product } from '../../types/product';
 import { formatPrice } from '../../utils';
 

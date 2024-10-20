@@ -1,5 +1,6 @@
 import { Review } from '../../types/review';
-import {formatDate} from '../../utils';
+import { formatDate } from '../../utils';
+import StarRating from '../rating/star-rating';
 
 type ReviewItemProps = {
   review: Review;
@@ -14,11 +15,7 @@ function ReviewItem({ review }: ReviewItemProps) {
         <time className="review-card__data" dateTime={review.createAt}>{formatDate(review.createAt)}</time>
       </div>
       <div className="rate review-card__rate">
-        {Array.from({ length: 5 }).map((_, index) => (
-          <svg key={index} width="17" height="16" aria-hidden="true">
-            <use xlinkHref={`#icon-${index < review.rating ? 'full-star' : 'star'}`}></use>
-          </svg>
-        ))}
+        <StarRating rating={review.rating} id={review.id} />
         <p className="visually-hidden">Оценка: {review.rating}</p>
       </div>
       <ul className="review-card__list">
