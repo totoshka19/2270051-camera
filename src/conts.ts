@@ -38,6 +38,8 @@ export const ProductLevel = {
 
 export const NUMBER_OF_REVIEWS = 3;
 
+export const SLIDES_PER_VIEW = 3;
+
 export const LOADING_MESSAGE = 'Идет загрузка...';
 
 export const ERROR_MESSAGE = 'Возникла ошибка, попробуйте позже';

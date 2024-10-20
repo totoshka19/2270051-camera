@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function ScrollToTopButton() {
   const handleScrollToTop = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -7,8 +8,9 @@ function ScrollToTopButton() {
   };
 
   return (
-    <a
+    <Link
       className="up-btn"
+      to="#"
       onClick={handleScrollToTop}
       style={{
         position: 'fixed',
@@ -20,7 +22,7 @@ function ScrollToTopButton() {
       <svg width="12" height="18" aria-hidden="true">
         <use xlinkHref="#icon-arrow2"></use>
       </svg>
-    </a>
+    </Link>
   );
 }
 

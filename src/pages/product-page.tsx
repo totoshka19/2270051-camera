@@ -12,6 +12,7 @@ import { AppDispatch, RootState } from '../store/store';
 import { fetchProduct } from '../store/product-slice';
 import { fetchReviews } from '../store/reviews-slice';
 import { AppRoute, NUMBER_OF_REVIEWS, RequestStatus } from '../conts';
+import { sortReviewsByDate } from '../utils';
 
 function ProductPage() {
   const { id } = useParams<{ id: string }>();
@@ -47,7 +48,7 @@ function ProductPage() {
     );
   }
 
-  const sortedReviews = [...reviews].sort((a, b) => new Date(b.createAt).getTime() - new Date(a.createAt).getTime());
+  const sortedReviews = sortReviewsByDate(reviews);
 
   const showMoreButton = sortedReviews.length > visibleReviews;
 

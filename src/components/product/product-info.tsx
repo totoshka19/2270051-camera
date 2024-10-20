@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { formatPrice } from '../../utils';
 import { Product } from '../../types/product';
+import { formatPrice } from '../../utils';
 
 type ProductInfoProps = {
   product: Product;
@@ -43,8 +43,20 @@ function ProductInfo({ product }: ProductInfoProps) {
             </button>
             <div className="tabs product__tabs">
               <div className="tabs__controls product__tabs-controls">
-                <button className={`tabs__control ${activeTab === 'characteristics' ? 'is-active' : ''}`} type="button" onClick={() => handleTabChange('characteristics')}>Характеристики</button>
-                <button className={`tabs__control ${activeTab === 'description' ? 'is-active' : ''}`} type="button" onClick={() => handleTabChange('description')}>Описание</button>
+                <button
+                  className={`tabs__control ${activeTab === 'characteristics' ? 'is-active' : ''}`}
+                  type="button"
+                  onClick={() => handleTabChange('characteristics')}
+                >
+                  Характеристики
+                </button>
+                <button
+                  className={`tabs__control ${activeTab === 'description' ? 'is-active' : ''}`}
+                  type="button"
+                  onClick={() => handleTabChange('description')}
+                >
+                  Описание
+                </button>
               </div>
               <div className="tabs__content">
                 <div className={`tabs__element ${activeTab === 'characteristics' ? 'is-active' : ''}`}>

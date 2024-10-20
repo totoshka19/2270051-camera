@@ -1,3 +1,11 @@
+import dayjs from 'dayjs';
+import 'dayjs/locale/ru';
+import {Review} from './types/review';
+
+export function formatDate(dateString: string): string {
+  return dayjs(dateString).locale('ru').format('DD MMMM');
+}
+
 export function formatPrice(price: number) {
   return `${price.toLocaleString('ru-RU')} ₽`;
 }
@@ -18,3 +26,14 @@ export function formatPhoneNumber(phone: string) {
   return cleaned;
 }
 
+export function getNextIndex(currentIndex: number, totalItems: number, slidesPerView: number): number {
+  return Math.min(currentIndex + slidesPerView, totalItems - slidesPerView);
+}
+
+export function getPrevIndex(currentIndex: number, slidesPerView: number): number {
+  return Math.max(currentIndex - slidesPerView, 0);
+}
+
+export function sortReviewsByDate(reviews: Review[]): Review[] {
+  return [...reviews].sort((a, b) => new Date(b.createAt).getTime() - new Date(a.createAt).getTime());
+}

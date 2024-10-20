@@ -14,25 +14,25 @@ function Footer() {
           <p className="footer__description">Интернет-магазин фото- и видеотехники</p>
           <ul className="social">
             <li className="social__item">
-              <a className="link" href="#" aria-label="Переход на страницу вконтакте">
+              <Link className="link" to="#" aria-label="Переход на страницу вконтакте">
                 <svg width="20" height="20" aria-hidden="true">
                   <use xlinkHref="#icon-vk"></use>
                 </svg>
-              </a>
+              </Link>
             </li>
             <li className="social__item">
-              <a className="link" href="#" aria-label="Переход на страницу pinterest">
+              <Link className="link" to="#" aria-label="Переход на страницу pinterest">
                 <svg width="20" height="20" aria-hidden="true">
                   <use xlinkHref="#icon-pinterest"></use>
                 </svg>
-              </a>
+              </Link>
             </li>
             <li className="social__item">
-              <a className="link" href="#" aria-label="Переход на страницу reddit">
+              <Link className="link" to="#" aria-label="Переход на страницу reddit">
                 <svg width="20" height="20" aria-hidden="true">
                   <use xlinkHref="#icon-reddit"></use>
                 </svg>
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
@@ -44,16 +44,13 @@ function Footer() {
                 <Link className="link" to={AppRoute.Catalog}>Каталог</Link>
               </li>
               <li className="footer__item">
-                <a className="link" href="#">Гарантии
-                </a>
+                <Link className="link" to="#">Гарантии</Link>
               </li>
               <li className="footer__item">
-                <a className="link" href="#">Доставка
-                </a>
+                <Link className="link" to="#">Доставка</Link>
               </li>
               <li className="footer__item">
-                <a className="link" href="#">О компании
-                </a>
+                <Link className="link" to="#">О компании</Link>
               </li>
             </ul>
           </li>
@@ -61,16 +58,13 @@ function Footer() {
             <p className="footer__title">Ресурсы</p>
             <ul className="footer__list">
               <li className="footer__item">
-                <a className="link" href="#">Курсы операторов
-                </a>
+                <Link className="link" to="#">Курсы операторов</Link>
               </li>
               <li className="footer__item">
-                <a className="link" href="#">Блог
-                </a>
+                <Link className="link" to="#">Блог</Link>
               </li>
               <li className="footer__item">
-                <a className="link" href="#">Сообщество
-                </a>
+                <Link className="link" to="#">Сообщество</Link>
               </li>
             </ul>
           </li>
@@ -78,12 +72,10 @@ function Footer() {
             <p className="footer__title">Поддержка</p>
             <ul className="footer__list">
               <li className="footer__item">
-                <a className="link" href="#">FAQ
-                </a>
+                <Link className="link" to="#">FAQ</Link>
               </li>
               <li className="footer__item">
-                <a className="link" href="#">Задать вопрос
-                </a>
+                <Link className="link" to="#">Задать вопрос</Link>
               </li>
             </ul>
           </li>

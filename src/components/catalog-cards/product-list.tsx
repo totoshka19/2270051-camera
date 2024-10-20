@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import ProductCard from './product-card';
+import Spinner from '../spinner';
 import { fetchProducts } from '../../store/products-slice';
 import { AppDispatch, RootState } from '../../store/store';
 import { RequestStatus } from '../../conts';
-import Spinner from '../spinner';
 
 function ProductList() {
   const dispatch = useDispatch<AppDispatch>();

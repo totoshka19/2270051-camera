@@ -1,9 +1,11 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/store';
 import { fetchSimilarProducts } from '../../store/product-similar-slice';
-import { RequestStatus } from '../../conts';
 import ProductCard from '../catalog-cards/product-card';
+import Spinner from '../spinner';
+import { getNextIndex, getPrevIndex } from '../../utils';
+import { RequestStatus, SLIDES_PER_VIEW } from '../../conts';
 
 type ProductSimilarProps = {
   cameraId: number;
@@ -13,18 +15,18 @@ function ProductSimilar({ cameraId }: ProductSimilarProps) {
   const dispatch = useDispatch<AppDispatch>();
   const similarProducts = useSelector((state: RootState) => state.productSimilar.items);
   const status = useSelector((state: RootState) => state.productSimilar.status);
-  const error = useSelector((state: RootState) => state.productSimilar.error);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     dispatch(fetchSimilarProducts(cameraId));
   }, [dispatch, cameraId]);
 
   if (status === RequestStatus.Loading) {
-    return <div>Загрузка...</div>;
+    return <Spinner loading error={false} />;
   }
 
   if (status === RequestStatus.Failed) {
-    return <div>{error}</div>;
+    return <Spinner loading={false} error />;
   }
 
   if (similarProducts.length === 0) {
@@ -32,17 +34,13 @@ function ProductSimilar({ cameraId }: ProductSimilarProps) {
   }
 
   const handlePrevClick = () => {
-    const slider = document.querySelector('.product-similar__slider-list') as HTMLElement;
-    if (slider) {
-      slider.scrollBy({ left: -slider.offsetWidth, behavior: 'smooth' });
-    }
+    const newIndex = getPrevIndex(currentIndex, SLIDES_PER_VIEW);
+    setCurrentIndex(newIndex);
   };
 
   const handleNextClick = () => {
-    const slider = document.querySelector('.product-similar__slider-list') as HTMLElement;
-    if (slider) {
-      slider.scrollBy({ left: slider.offsetWidth, behavior: 'smooth' });
-    }
+    const newIndex = getNextIndex(currentIndex, similarProducts.length, SLIDES_PER_VIEW);
+    setCurrentIndex(newIndex);
   };
 
   return (
@@ -52,16 +50,34 @@ function ProductSimilar({ cameraId }: ProductSimilarProps) {
           <h2 className="title title--h3">Похожие товары</h2>
           <div className="product-similar__slider">
             <div className="product-similar__slider-list">
-              {similarProducts.map((product) => (
-                <ProductCard key={product.id} product={product} className="is-active" />
+              {similarProducts.map((product, index) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  className={index >= currentIndex && index < currentIndex + SLIDES_PER_VIEW ? 'is-active' : ''}
+                />
               ))}
             </div>
-            <button className="slider-controls slider-controls--prev" type="button" aria-label="Предыдущий слайд" onClick={handlePrevClick}>
+            <button
+              className="slider-controls slider-controls--prev"
+              type="button"
+              aria-label="Предыдущий слайд"
+              onClick={handlePrevClick}
+              disabled={currentIndex === 0}
+              style={{ pointerEvents: 'auto' }}
+            >
               <svg width="7" height="12" aria-hidden="true">
                 <use xlinkHref="#icon-arrow"></use>
               </svg>
             </button>
-            <button className="slider-controls slider-controls--next" type="button" aria-label="Следующий слайд" onClick={handleNextClick}>
+            <button
+              className="slider-controls slider-controls--next"
+              type="button"
+              aria-label="Следующий слайд"
+              onClick={handleNextClick}
+              disabled={currentIndex >= similarProducts.length - SLIDES_PER_VIEW}
+              style={{ pointerEvents: 'auto' }}
+            >
               <svg width="7" height="12" aria-hidden="true">
                 <use xlinkHref="#icon-arrow"></use>
               </svg>

@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { Product } from '../../types/product';
-import { formatPrice } from '../../utils';
 import { Link } from 'react-router-dom';
 import PopUpContactMe from '../pop-up-contact-me/pop-up-contact-me';
+import { Product } from '../../types/product';
+import { formatPrice } from '../../utils';
 
 type ProductCardProps = {
   product: Product;

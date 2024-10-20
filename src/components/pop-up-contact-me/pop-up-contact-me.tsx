@@ -1,12 +1,12 @@
 import { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Product } from '../../types/product';
-import { formatPhoneNumber, validatePhoneNumber } from '../../utils';
 import { usePopUp } from '../../hooks/use-pop-up';
 import ProductInfoShort from './product-info-short';
 import { createOrder } from '../../store/order-slice';
-import { ORDER_ERROR_MESSAGE, PHONE_FORMAT_ERROR_MESSAGE } from '../../conts';
 import { AppDispatch } from '../../store/store';
+import { Product } from '../../types/product';
+import { formatPhoneNumber, validatePhoneNumber } from '../../utils';
+import { ORDER_ERROR_MESSAGE, PHONE_FORMAT_ERROR_MESSAGE } from '../../conts';
 
 type PopUpProps = {
   product: Product;
