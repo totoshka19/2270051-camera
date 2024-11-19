@@ -4,9 +4,10 @@ import ProductCard from './product-card';
 import Spinner from '../spinner';
 import { fetchProducts } from '../../store/products-slice';
 import { AppDispatch, RootState } from '../../store/store';
-import { RequestStatus, SortDirection, SortType } from '../../conts';
 import { SortParams } from '../../types/sorting';
 import { Product } from '../../types/product';
+import { sortProducts } from '../../utils';
+import { RequestStatus } from '../../conts';
 
 type ProductListProps = {
   sortParams: SortParams;
@@ -26,14 +27,7 @@ function ProductList({ sortParams }: ProductListProps) {
 
   useEffect(() => {
     if (products.length > 0) {
-      const sorted = [...products].sort((a, b) => {
-        if (sortParams.type === SortType.Price) {
-          return sortParams.direction === SortDirection.Asc ? a.price - b.price : b.price - a.price;
-        } else if (sortParams.type === SortType.Popular) {
-          return sortParams.direction === SortDirection.Asc ? a.rating - b.rating : b.rating - a.rating;
-        }
-        return 0;
-      });
+      const sorted = sortProducts(products, sortParams);
       setSortedProducts(sorted);
     }
   }, [products, sortParams]);

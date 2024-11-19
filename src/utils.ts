@@ -2,6 +2,8 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import {Review} from './types/review';
 import {Product} from './types/product';
+import {SortParams} from './types/sorting';
+import {SortDirection, SortType} from './conts';
 
 export function formatDate(dateString: string): string {
   return dayjs(dateString).locale('ru').format('DD MMMM');
@@ -47,4 +49,15 @@ export function filterProducts (products: Product[], searchTerm: string): Produc
   return products.filter((product) =>
     product.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+}
+
+export function sortProducts(products: Product[], sortParams: SortParams): Product[] {
+  return [...products].sort((a, b) => {
+    if (sortParams.type === SortType.Price) {
+      return sortParams.direction === SortDirection.Asc ? a.price - b.price : b.price - a.price;
+    } else if (sortParams.type === SortType.Popular) {
+      return sortParams.direction === SortDirection.Asc ? a.rating - b.rating : b.rating - a.rating;
+    }
+    return 0;
+  });
 }
