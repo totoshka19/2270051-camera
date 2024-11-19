@@ -24,3 +24,9 @@ export type OrderState = {
   status: typeof RequestStatus[keyof typeof RequestStatus];
   error: string | null;
 }
+
+export type SearchState = {
+  results: Product[];
+  status: typeof RequestStatus[keyof typeof RequestStatus];
+  error: string | null;
+}

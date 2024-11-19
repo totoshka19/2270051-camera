@@ -42,6 +42,8 @@ export const SLIDES_PER_VIEW = 3;
 
 export const MAX_RATING_STARS = 5;
 
+export const MIN_SEARCH_LENGTH = 3;
+
 export const LOADING_MESSAGE = 'Идет загрузка...';
 
 export const ERROR_MESSAGE = 'Возникла ошибка, попробуйте позже';

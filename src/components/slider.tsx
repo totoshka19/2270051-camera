@@ -4,6 +4,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/autoplay';
 import { Slides } from '../conts';
+import './slider.css';
 
 function Slider() {
   return (
@@ -31,25 +32,6 @@ function Slider() {
           </div>
         </SwiperSlide>
       ))}
-      <style>
-        {`
-          .swiper-pagination {
-            text-align: right;
-            padding-right: 40px;
-          }
-          .swiper-pagination-bullet {
-            width: 16px;
-            height: 16px;
-            background-color: #f4f4fc;
-            border-radius: 50%;
-            margin: 0 7px;
-            opacity: 1;
-          }
-          .swiper-pagination-bullet-active {
-            background-color: #7575e2;
-          }
-        `}
-      </style>
     </Swiper>
   );
 }

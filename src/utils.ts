@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import {Review} from './types/review';
+import {Product} from './types/product';
 
 export function formatDate(dateString: string): string {
   return dayjs(dateString).locale('ru').format('DD MMMM');
@@ -40,4 +41,10 @@ export function sortReviewsByDate(reviews: Review[]): Review[] {
 
 export function getRange(start: number, end: number): number[] {
   return Array.from({ length: end - start + 1 }, (_, i) => start + i);
+}
+
+export function filterProducts (products: Product[], searchTerm: string): Product[] {
+  return products.filter((product) =>
+    product.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 }

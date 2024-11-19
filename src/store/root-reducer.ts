@@ -4,6 +4,7 @@ import productReducer from './product-slice';
 import reviewsReducer from './reviews-slice';
 import orderReducer from './order-slice';
 import productSimilarReducer from './product-similar-slice';
+import searchReducer from './search-slice';
 
 const rootReducer = combineReducers({
   products: productsReducer,
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   reviews: reviewsReducer,
   order: orderReducer,
   productSimilar: productSimilarReducer,
+  search: searchReducer,
 });
 
 export default rootReducer;
