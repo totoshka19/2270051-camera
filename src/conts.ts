@@ -75,3 +75,13 @@ export const Slides = [
     Link: '/camera/2',
   },
 ];
+
+export const SortType = {
+  Price: 'price',
+  Popular: 'popular',
+} as const;
+
+export const SortDirection = {
+  Asc: 'asc',
+  Desc: 'desc',
+} as const;

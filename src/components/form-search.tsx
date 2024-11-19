@@ -7,6 +7,8 @@ import { filterProducts } from '../utils';
 import { MIN_SEARCH_LENGTH, RequestStatus } from '../conts';
 import './form-search.css';
 
+// !TODO Выпадающий список с результатами поиска поддерживает навигацию с помощью клавиатуры: стрелки, клавиша Tab.
+
 function FormSearch() {
   const [searchTerm, setSearchTerm] = useState('');
   const dispatch = useDispatch<AppDispatch>();

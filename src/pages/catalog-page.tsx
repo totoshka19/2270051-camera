@@ -1,11 +1,19 @@
+import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import Layout from '../components/layout';
 import Slider from '../components/slider';
 import ProductList from '../components/catalog-cards/product-list';
-import { AppRoute } from '../conts';
+import Sorting from '../components/sorting';
+import { AppRoute, SortDirection, SortType } from '../conts';
 
 function CatalogPage() {
+  const [sortParams, setSortParams] = useState<{ type: string; direction: string }>({ type: SortType.Price, direction: SortDirection.Asc });
+
+  const handleSortChange = (type: string, direction: string) => {
+    setSortParams({ type, direction });
+  };
+
   return (
     <>
       <Helmet>
@@ -40,7 +48,8 @@ function CatalogPage() {
                     <img src="img/banner.png" />
                   </div>
                   <div className="catalog__content">
-                    <ProductList />
+                    <Sorting onSortChange={handleSortChange} />
+                    <ProductList sortParams={sortParams} />
                   </div>
                 </div>
               </div>
