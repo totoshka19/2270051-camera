@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { setSearchResults, clearSearchResults } from '../store/search-slice';
-import { AppDispatch, RootState } from '../store/store';
-import { filterProducts } from '../utils';
-import { MIN_SEARCH_LENGTH, RequestStatus } from '../conts';
+import { setSearchResults, clearSearchResults } from '../../store/search-slice';
+import { AppDispatch, RootState } from '../../store/store';
+import { filterProducts } from '../../utils';
+import { MIN_SEARCH_LENGTH, RequestStatus } from '../../conts';
 import './form-search.css';
 
 // !TODO Выпадающий список с результатами поиска поддерживает навигацию с помощью клавиатуры: стрелки, клавиша Tab.

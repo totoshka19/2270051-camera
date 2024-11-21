@@ -77,11 +77,11 @@ export const Slides = [
 ];
 
 export const SortType = {
-  Price: 'price',
-  Popular: 'popular',
+  Price: 'sortPrice',
+  Popular: 'sortPopular',
 } as const;
 
 export const SortDirection = {
-  Asc: 'asc',
-  Desc: 'desc',
+  Asc: 'up',
+  Desc: 'down',
 } as const;

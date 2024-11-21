@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import FormSearch from './form-search';
+import FormSearch from './form-search/form-search';
 import { AppRoute } from '../conts';
 
 function Header() {

@@ -3,7 +3,7 @@ import { Pagination, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/autoplay';
-import { Slides } from '../conts';
+import { Slides } from '../../conts';
 import './slider.css';
 
 function Slider() {

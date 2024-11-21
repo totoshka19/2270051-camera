@@ -1,19 +1,16 @@
-import { useState } from 'react';
+import {useSelector} from 'react-redux';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import Layout from '../components/layout';
-import Slider from '../components/slider';
+import Slider from '../components/slider/slider';
 import ProductList from '../components/catalog-cards/product-list';
 import Sorting from '../components/sorting';
 import Filter from '../components/filter';
-import { AppRoute, SortDirection, SortType } from '../conts';
+import {RootState} from '../store/store';
+import { AppRoute } from '../conts';
 
 function CatalogPage() {
-  const [sortParams, setSortParams] = useState<{ type: string; direction: string }>({ type: SortType.Price, direction: SortDirection.Asc });
-
-  const handleSortChange = (type: string, direction: string) => {
-    setSortParams({ type, direction });
-  };
+  const sortParams = useSelector((state: RootState) => state.sorting);
 
   return (
     <>
@@ -49,7 +46,7 @@ function CatalogPage() {
                     <Filter />
                   </div>
                   <div className="catalog__content">
-                    <Sorting onSortChange={handleSortChange} />
+                    <Sorting />
                     <ProductList sortParams={sortParams} />
                   </div>
                 </div>
