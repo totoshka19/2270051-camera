@@ -15,7 +15,7 @@ const searchSlice = createSlice({
   reducers: {
     setSearchResults: (state, action: PayloadAction<Product[]>) => {
       state.results = action.payload;
-      state.status = RequestStatus.Idle;
+      state.status = RequestStatus.Succeeded;
     },
     clearSearchResults: (state) => {
       state.results = [];
