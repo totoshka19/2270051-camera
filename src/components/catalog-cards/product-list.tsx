@@ -6,7 +6,7 @@ import { fetchProducts } from '../../store/products-slice';
 import { AppDispatch, RootState } from '../../store/store';
 import { SortParams } from '../../types/sorting';
 import { Product } from '../../types/product';
-import { sortProducts } from '../../utils';
+import { sortProducts, filterProducts } from '../../utils';
 import { RequestStatus } from '../../conts';
 
 type ProductListProps = {
@@ -16,8 +16,9 @@ type ProductListProps = {
 function ProductList({ sortParams }: ProductListProps) {
   const dispatch = useDispatch<AppDispatch>();
   const products = useSelector((state: RootState) => state.products.items);
+  const filters = useSelector((state: RootState) => state.filter);
   const status = useSelector((state: RootState) => state.products.status);
-  const [sortedProducts, setSortedProducts] = useState<Product[]>([]);
+  const [sortedAndFilteredProducts, setSortedAndFilteredProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     if (status === RequestStatus.Idle) {
@@ -27,10 +28,11 @@ function ProductList({ sortParams }: ProductListProps) {
 
   useEffect(() => {
     if (products.length > 0) {
-      const sorted = sortProducts(products, sortParams);
-      setSortedProducts(sorted);
+      const filtered = filterProducts(products, filters);
+      const sorted = sortProducts(filtered, sortParams);
+      setSortedAndFilteredProducts(sorted);
     }
-  }, [products, sortParams]);
+  }, [products, sortParams, filters]);
 
   if (status === RequestStatus.Loading) {
     return <Spinner loading error={false} />;
@@ -42,7 +44,7 @@ function ProductList({ sortParams }: ProductListProps) {
 
   return (
     <div className="cards catalog__cards">
-      {sortedProducts.map((product) => (
+      {sortedAndFilteredProducts.map((product) => (
         <ProductCard key={product.id} product={product} />
       ))}
     </div>

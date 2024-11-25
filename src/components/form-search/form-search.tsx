@@ -3,11 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { setSearchResults, clearSearchResults } from '../../store/search-slice';
 import { AppDispatch, RootState } from '../../store/store';
-import { filterProducts } from '../../utils';
+import { searchProducts } from '../../utils';
 import { MIN_SEARCH_LENGTH, RequestStatus } from '../../conts';
 import './form-search.css';
-
-// !TODO Выпадающий список с результатами поиска поддерживает навигацию с помощью клавиатуры: стрелки, клавиша Tab.
 
 function FormSearch() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -17,7 +15,7 @@ function FormSearch() {
 
   useEffect(() => {
     if (searchTerm.length >= MIN_SEARCH_LENGTH) {
-      const filteredResults = filterProducts(allProducts, searchTerm);
+      const filteredResults = searchProducts(allProducts, searchTerm);
       dispatch(setSearchResults(filteredResults));
     } else {
       dispatch(clearSearchResults());

@@ -1,14 +1,15 @@
+import { ProductCategory, ProductLevel, ProductType } from '../conts';
+
 export type FilterParams = {
-  category: string;
-  types: {
-    digital: boolean;
-    film: boolean;
-    snapshot: boolean;
-    collection: boolean;
+  price: {
+    min: number | '';
+    max: number | '';
   };
-  levels: {
-    zero: boolean;
-    nonProfessional: boolean;
-    professional: boolean;
+  category: keyof typeof ProductCategory | '';
+  cameraType: {
+    [key in keyof typeof ProductType]: boolean;
   };
-};
+  level: {
+    [key in keyof typeof ProductLevel]: boolean;
+  };
+}

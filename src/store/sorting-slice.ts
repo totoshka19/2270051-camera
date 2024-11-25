@@ -1,12 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { SortDirection, SortType } from '../conts';
+import {SortParams} from '../types/sorting';
 
-interface SortingState {
-  type: string;
-  direction: string;
-}
-
-const initialState: SortingState = {
+const initialState: SortParams = {
   type: SortType.Price,
   direction: SortDirection.Asc,
 };
