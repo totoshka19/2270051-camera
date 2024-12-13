@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import PopUpAddToCart from '../pop-up/pop-up-add-to-cart';
 import PopUpAddToCartSuccess from '../pop-up/pop-up-add-to-cart-success';
 import { Product } from '../../types/product';
 import Rating from '../rating/rating';
 import { formatPrice } from '../../utils';
 import { AppRoute } from '../../conts';
+import { RootState } from '../../store/store';
+import { selectIsProductInBasket } from '../../store/basket-slice';
 
 type ProductCardProps = {
   product: Product;
@@ -15,7 +18,8 @@ type ProductCardProps = {
 function ProductCard({ product, className }: ProductCardProps) {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isSuccessPopupOpen, setIsSuccessPopupOpen] = useState(false);
-  const [isInCart, setIsInCart] = useState(false);
+
+  const isInCart = useSelector((state: RootState) => selectIsProductInBasket(state, product.id));
 
   const handleBuyClick = () => {
     setIsPopupOpen(true);
@@ -27,7 +31,6 @@ function ProductCard({ product, className }: ProductCardProps) {
 
   const handleOpenSuccessPopup = () => {
     setIsSuccessPopupOpen(true);
-    setIsInCart(true);
   };
 
   const handleCloseSuccessPopup = () => {

@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { usePopUp } from '../../hooks/use-pop-up';
 import ProductInfoShort from './product-info-short';
-import { createOrder } from '../../store/order-slice';
+import { addToBasket } from '../../store/basket-slice';
 import { AppDispatch } from '../../store/store';
 import { Product } from '../../types/product';
 
@@ -20,12 +20,7 @@ function PopUpAddToCart({ product, onClose, onSuccess }: PopUpProps) {
 
   const handleSubmitForm = () => {
     try {
-      dispatch(createOrder({
-        camerasIds: [product.id],
-        coupon: null,
-        tel: null,
-      }));
-
+      dispatch(addToBasket(product));
       onClose();
       onSuccess();
     } catch (error) {

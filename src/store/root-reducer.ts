@@ -7,6 +7,7 @@ import productSimilarReducer from './product-similar-slice';
 import searchReducer from './search-slice';
 import sortingReducer from './sorting-slice';
 import filterReducer from './filter-slice';
+import basketReducer from './basket-slice';
 
 const rootReducer = combineReducers({
   products: productsReducer,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   search: searchReducer,
   sorting: sortingReducer,
   filter: filterReducer,
+  basket: basketReducer,
 });
 
 export default rootReducer;

@@ -1,5 +1,6 @@
 import { Product } from './product';
-import {Review} from './review';
+import { Review } from './review';
+import { BasketItem } from './basket';
 import { RequestStatus } from '../conts';
 
 export type ProductState = {
@@ -30,3 +31,7 @@ export type SearchState = {
   status: typeof RequestStatus[keyof typeof RequestStatus];
   error: string | null;
 }
+
+export type BasketState = {
+  items: BasketItem[];
+};
