@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import PopUpContactMe from '../pop-up-contact-me/pop-up-contact-me';
+import PopUpAddToCart from '../pop-up/pop-up-add-to-cart';
+import PopUpAddToCartSuccess from '../pop-up/pop-up-add-to-cart-success';
 import { Product } from '../../types/product';
 import Rating from '../rating/rating';
 import { formatPrice } from '../../utils';
+import { AppRoute } from '../../conts';
 
 type ProductCardProps = {
   product: Product;
@@ -12,6 +14,8 @@ type ProductCardProps = {
 
 function ProductCard({ product, className }: ProductCardProps) {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [isSuccessPopupOpen, setIsSuccessPopupOpen] = useState(false);
+  const [isInCart, setIsInCart] = useState(false);
 
   const handleBuyClick = () => {
     setIsPopupOpen(true);
@@ -19,6 +23,15 @@ function ProductCard({ product, className }: ProductCardProps) {
 
   const handleClosePopup = () => {
     setIsPopupOpen(false);
+  };
+
+  const handleOpenSuccessPopup = () => {
+    setIsSuccessPopupOpen(true);
+    setIsInCart(true);
+  };
+
+  const handleCloseSuccessPopup = () => {
+    setIsSuccessPopupOpen(false);
   };
 
   return (
@@ -35,10 +48,37 @@ function ProductCard({ product, className }: ProductCardProps) {
         <p className="product-card__price"><span className="visually-hidden">Цена:</span>{formatPrice(product.price)}</p>
       </div>
       <div className="product-card__buttons">
-        <button className="btn btn--purple product-card__btn" type="button" onClick={handleBuyClick}>Купить</button>
+        {isInCart ? (
+          <Link
+            to={AppRoute.Basket}
+            className="btn btn--purple-border product-card__btn product-card__btn--in-cart"
+          >
+            <svg width="16" height="16" aria-hidden="true">
+              <use xlinkHref="#icon-basket"></use>
+            </svg>
+            В корзине
+          </Link>
+        ) : (
+          <button
+            className="btn btn--purple product-card__btn"
+            type="button"
+            onClick={handleBuyClick}
+          >
+            Купить
+          </button>
+        )}
         <Link to={`/camera/${product.id}`} className="btn btn--transparent">Подробнее</Link>
       </div>
-      {isPopupOpen && <PopUpContactMe product={product} onClose={handleClosePopup} />}
+      {isPopupOpen && (
+        <PopUpAddToCart
+          product={product}
+          onClose={handleClosePopup}
+          onSuccess={handleOpenSuccessPopup}
+        />
+      )}
+      {isSuccessPopupOpen && (
+        <PopUpAddToCartSuccess onClose={handleCloseSuccessPopup} />
+      )}
     </div>
   );
 }
