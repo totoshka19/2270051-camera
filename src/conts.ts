@@ -47,6 +47,12 @@ export const BREADCRUMBS_PRODUCT = (productName: string) => [
   { label: productName },
 ];
 
+export const BREADCRUMBS_BASKET = [
+  { label: 'Главная', link: AppRoute.Catalog },
+  { label: 'Каталог', link: AppRoute.Catalog },
+  { label: 'Корзина' },
+];
+
 export const NUMBER_OF_REVIEWS = 3;
 
 export const SLIDES_PER_VIEW = 3;
