@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Layout from '../components/layout';
+import Breadcrumbs from '../components/breadcrumbs';
 import ProductInfo from '../components/product/product-info';
 import ReviewList from '../components/product/review-list';
 import ScrollToTopButton from '../components/scroll-to-top-button';
@@ -11,7 +12,7 @@ import ProductSimilar from '../components/product/product-similar';
 import { AppDispatch, RootState } from '../store/store';
 import { fetchProduct } from '../store/product-slice';
 import { fetchReviews } from '../store/reviews-slice';
-import { AppRoute, NUMBER_OF_REVIEWS, RequestStatus } from '../conts';
+import { BREADCRUMBS_PRODUCT, NUMBER_OF_REVIEWS, RequestStatus } from '../conts';
 import { sortReviewsByDate } from '../utils';
 
 function ProductPage() {
@@ -52,6 +53,8 @@ function ProductPage() {
 
   const showMoreButton = sortedReviews.length > visibleReviews;
 
+  const breadcrumbs = BREADCRUMBS_PRODUCT(product.name);
+
   return (
     <>
       <Helmet>
@@ -61,29 +64,7 @@ function ProductPage() {
       <Layout>
         <main>
           <div className="page-content">
-            <div className="breadcrumbs">
-              <div className="container">
-                <ul className="breadcrumbs__list">
-                  <li className="breadcrumbs__item">
-                    <Link className="breadcrumbs__link" to={AppRoute.Catalog}>Главная
-                      <svg width="5" height="8" aria-hidden="true">
-                        <use xlinkHref="#icon-arrow-mini"></use>
-                      </svg>
-                    </Link>
-                  </li>
-                  <li className="breadcrumbs__item">
-                    <Link className="breadcrumbs__link" to={AppRoute.Catalog}>Каталог
-                      <svg width="5" height="8" aria-hidden="true">
-                        <use xlinkHref="#icon-arrow-mini"></use>
-                      </svg>
-                    </Link>
-                  </li>
-                  <li className="breadcrumbs__item">
-                    <span className="breadcrumbs__link breadcrumbs__link--active">{product.name}</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
+            <Breadcrumbs items={breadcrumbs} />
 
             <ProductInfo product={product} />
 

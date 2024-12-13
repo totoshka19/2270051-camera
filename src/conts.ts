@@ -36,6 +36,17 @@ export const ProductLevel = {
   Professional: 'Профессиональный',
 } as const;
 
+export const BREADCRUMBS_CATALOG = [
+  { label: 'Главная', link: AppRoute.Catalog },
+  { label: 'Каталог' },
+];
+
+export const BREADCRUMBS_PRODUCT = (productName: string) => [
+  { label: 'Главная', link: AppRoute.Catalog },
+  { label: 'Каталог', link: AppRoute.Catalog },
+  { label: productName },
+];
+
 export const NUMBER_OF_REVIEWS = 3;
 
 export const SLIDES_PER_VIEW = 3;
