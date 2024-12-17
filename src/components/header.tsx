@@ -1,8 +1,14 @@
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { RootState } from '../store/store';
 import FormSearch from './form-search/form-search';
 import { AppRoute } from '../conts';
 
 function Header() {
+  const basketItemsCount = useSelector((state: RootState) =>
+    state.basket.items.reduce((total, item) => total + item.quantity, 0)
+  );
+
   return (
     <header className="header" id="header">
       <div className="container">
@@ -32,6 +38,9 @@ function Header() {
           <svg width="16" height="16" aria-hidden="true">
             <use xlinkHref="#icon-basket"></use>
           </svg>
+          {basketItemsCount > 0 && (
+            <span className="header__basket-count">{basketItemsCount}</span>
+          )}
         </Link>
       </div>
     </header>
