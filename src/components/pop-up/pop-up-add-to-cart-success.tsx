@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { usePopUp } from '../../hooks/use-pop-up';
 import { AppRoute } from '../../conts';
 
@@ -9,15 +9,20 @@ type PopUpAddToCartSuccessProps = {
 
 function PopUpAddToCartSuccess({ onClose }: PopUpAddToCartSuccessProps) {
   const modalRef = useRef<HTMLDivElement | null>(null);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const { handleOverlayClick } = usePopUp({
     onClose,
     modalRef,
   });
 
-  const handleContinueShoppingClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
-    event.preventDefault();
+  const handleContinueShoppingClick = () => {
     onClose();
+
+    if (location.pathname.startsWith(AppRoute.Camera.replace(':id', ''))) {
+      navigate(AppRoute.Catalog);
+    }
   };
 
   return (
@@ -30,13 +35,13 @@ function PopUpAddToCartSuccess({ onClose }: PopUpAddToCartSuccessProps) {
             <use xlinkHref="#icon-success"></use>
           </svg>
           <div className="modal__buttons">
-            <a
+            <button
               className="btn btn--transparent modal__btn"
-              href="#"
+              type="button"
               onClick={handleContinueShoppingClick}
             >
               Продолжить покупки
-            </a>
+            </button>
             <Link
               to={AppRoute.Basket}
               className="btn btn--purple modal__btn modal__btn--fit-width"

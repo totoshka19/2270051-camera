@@ -19,13 +19,9 @@ function PopUpAddToCart({ product, onClose, onSuccess }: PopUpProps) {
   const { handleOverlayClick } = usePopUp({ onClose, modalRef });
 
   const handleSubmitForm = () => {
-    try {
-      dispatch(addToBasket(product));
-      onClose();
-      onSuccess();
-    } catch (error) {
-      // Handle error if needed
-    }
+    dispatch(addToBasket(product));
+    onClose();
+    onSuccess();
   };
 
   return (

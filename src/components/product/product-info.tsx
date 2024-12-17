@@ -2,6 +2,8 @@ import { useState } from 'react';
 import Rating from '../rating/rating';
 import { Product } from '../../types/product';
 import { formatPrice } from '../../utils';
+import PopUpAddToCart from '../pop-up/pop-up-add-to-cart';
+import PopUpAddToCartSuccess from '../pop-up/pop-up-add-to-cart-success';
 
 type ProductInfoProps = {
   product: Product;
@@ -9,9 +11,23 @@ type ProductInfoProps = {
 
 function ProductInfo({ product }: ProductInfoProps) {
   const [activeTab, setActiveTab] = useState('description');
+  const [isAddToCartPopupOpen, setAddToCartPopupOpen] = useState(false);
+  const [isSuccessPopupOpen, setSuccessPopupOpen] = useState(false);
 
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);
+  };
+
+  const handleAddToCartClick = () => {
+    setAddToCartPopupOpen(true);
+  };
+
+  const handleCloseAddToCartPopup = () => {
+    setAddToCartPopupOpen(false);
+  };
+
+  const handleCloseSuccessPopup = () => {
+    setSuccessPopupOpen(false);
   };
 
   return (
@@ -28,12 +44,26 @@ function ProductInfo({ product }: ProductInfoProps) {
             <h1 className="title title--h3">{product.name}</h1>
             <Rating product={product} />
             <p className="product__price"><span className="visually-hidden">Цена:</span>{formatPrice(product.price)}</p>
-            <button className="btn btn--purple" type="button">
+            <button
+              className="btn btn--purple"
+              type="button"
+              onClick={handleAddToCartClick}
+            >
               <svg width="24" height="16" aria-hidden="true">
                 <use xlinkHref="#icon-add-basket"></use>
               </svg>
-            Добавить в корзину
+              Добавить в корзину
             </button>
+            {isAddToCartPopupOpen && (
+              <PopUpAddToCart
+                product={product}
+                onClose={handleCloseAddToCartPopup}
+                onSuccess={() => setSuccessPopupOpen(true)}
+              />
+            )}
+            {isSuccessPopupOpen && (
+              <PopUpAddToCartSuccess onClose={handleCloseSuccessPopup} />
+            )}
             <div className="tabs product__tabs">
               <div className="tabs__controls product__tabs-controls">
                 <button

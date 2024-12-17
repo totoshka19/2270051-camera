@@ -1,6 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { updateQuantity, removeFromBasket } from '../../store/basket-slice';
 import { BasketItem as BasketItemType } from '../../types/basket';
+import { formatPrice } from '../../utils';
 
 type BasketItemProps = {
   item: BasketItemType;
@@ -35,7 +36,7 @@ function BasketItem({ item }: BasketItemProps) {
           <li className="basket-item__list-item">{item.product.level}</li>
         </ul>
       </div>
-      <p className="basket-item__price"><span className="visually-hidden">Цена:</span>{item.product.price} ₽</p>
+      <p className="basket-item__price"><span className="visually-hidden">Цена:</span>{formatPrice(item.product.price)}</p>
       <div className="quantity">
         <button
           className="btn-icon btn-icon--prev"
@@ -67,7 +68,7 @@ function BasketItem({ item }: BasketItemProps) {
           </svg>
         </button>
       </div>
-      <div className="basket-item__total-price"><span className="visually-hidden">Общая цена:</span>{item.product.price * item.quantity} ₽</div>
+      <div className="basket-item__total-price"><span className="visually-hidden">Общая цена:</span>{formatPrice(item.product.price * item.quantity)}</div>
       <button
         className="cross-btn"
         type="button"
