@@ -8,7 +8,7 @@ export const ApiRoute = {
 export const AppRoute = {
   Catalog: '/',
   Camera: '/camera/:id',
-  Basket: '/basket',
+  Card: '/card',
 } as const;
 
 export const RequestStatus = {

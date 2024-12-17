@@ -1,10 +1,26 @@
+import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { RootState } from '../store/store';
 import Layout from '../components/layout';
 import Breadcrumbs from '../components/breadcrumbs';
 import BasketList from '../components/basket/basket-list';
-import { BREADCRUMBS_BASKET } from '../conts';
+import { AppRoute, BREADCRUMBS_BASKET } from '../conts';
+import { formatPrice } from '../utils';
 
 function BasketPage() {
+  const navigate = useNavigate();
+  const basketItems = useSelector((state: RootState) => state.basket.items);
+
+  useEffect(() => {
+    if (basketItems.length === 0) {
+      navigate(AppRoute.Catalog);
+    }
+  }, [basketItems, navigate]);
+
+  const totalPrice = basketItems.reduce((total, item) => total + item.product.price * item.quantity, 0);
+
   return (
     <>
       <Helmet>
@@ -27,7 +43,7 @@ function BasketPage() {
                   <div className="basket__summary-order">
                     <p className="basket__summary-item">
                       <span className="basket__summary-text">Всего:</span>
-                      <span className="basket__summary-value">111 390 ₽</span>
+                      <span className="basket__summary-value">{formatPrice(totalPrice)}</span>
                     </p>
                     <p className="basket__summary-item">
                       <span className="basket__summary-text">Скидка:</span>
@@ -35,7 +51,7 @@ function BasketPage() {
                     </p>
                     <p className="basket__summary-item">
                       <span className="basket__summary-text basket__summary-text--total">К оплате:</span>
-                      <span className="basket__summary-value basket__summary-value--total">111 390 ₽</span>
+                      <span className="basket__summary-value basket__summary-value--total">{formatPrice(totalPrice)}</span>
                     </p>
                     <button className="btn btn--purple" type="submit">Оформить заказ
                     </button>

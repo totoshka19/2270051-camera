@@ -53,7 +53,7 @@ function ProductCard({ product, className }: ProductCardProps) {
       <div className="product-card__buttons">
         {isInCart ? (
           <Link
-            to={AppRoute.Basket}
+            to={AppRoute.Card}
             className="btn btn--purple-border product-card__btn product-card__btn--in-cart"
           >
             <svg width="16" height="16" aria-hidden="true">

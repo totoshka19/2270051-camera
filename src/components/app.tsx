@@ -13,7 +13,7 @@ function App() {
         <Routes>
           <Route path={AppRoute.Catalog} element={<CatalogPage />} />
           <Route path={AppRoute.Camera} element={<ProductPage />} />
-          <Route path={AppRoute.Basket} element={<BasketPage />} />
+          <Route path={AppRoute.Card} element={<BasketPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>
