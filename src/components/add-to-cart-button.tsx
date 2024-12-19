@@ -1,7 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../store/store';
+import { AppDispatch } from '../store/store';
 import { addToBasket, selectIsProductInBasket } from '../store/basket-slice';
 import { Product } from '../types/product';
+import {RootState} from '../store/root-reducer';
 
 type AddToCartButtonProps = {
   product: Product;

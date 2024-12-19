@@ -21,4 +21,6 @@ const rootReducer = combineReducers({
   basket: basketReducer,
 });
 
+export type RootState = ReturnType<typeof rootReducer>;
+
 export default rootReducer;

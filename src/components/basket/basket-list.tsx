@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
 import BasketItem from './basket-item';
+import { RootState } from '../../store/root-reducer';
 
 function BasketList() {
   const basketItems = useSelector((state: RootState) => state.basket.items);

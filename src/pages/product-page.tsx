@@ -9,11 +9,12 @@ import ReviewList from '../components/product/review-list';
 import ScrollToTopButton from '../components/scroll-to-top-button';
 import Spinner from '../components/spinner';
 import ProductSimilar from '../components/product/product-similar';
-import { AppDispatch, RootState } from '../store/store';
+import { AppDispatch } from '../store/store';
 import { fetchProduct } from '../store/product-slice';
 import { fetchReviews } from '../store/reviews-slice';
 import { BREADCRUMBS_PRODUCT, NUMBER_OF_REVIEWS, RequestStatus } from '../conts';
 import { sortReviewsByDate } from '../utils';
+import { RootState } from '../store/root-reducer';
 
 function ProductPage() {
   const { id } = useParams<{ id: string }>();

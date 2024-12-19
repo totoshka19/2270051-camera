@@ -1,8 +1,8 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSortDirection, setSortType } from '../store/sorting-slice';
-import { RootState } from '../store/store';
 import { SortDirection, SortType } from '../conts';
+import { RootState } from '../store/root-reducer';
 
 type SortingProps = {
   onSortChange?: (type: string, direction: string) => void;

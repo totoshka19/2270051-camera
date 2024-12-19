@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { setSearchResults, clearSearchResults } from '../../store/search-slice';
-import { AppDispatch, RootState } from '../../store/store';
+import { AppDispatch } from '../../store/store';
 import { searchProducts } from '../../utils';
 import { MIN_SEARCH_LENGTH, RequestStatus } from '../../conts';
 import './form-search.css';
+import { RootState } from '../../store/root-reducer';
 
 function FormSearch() {
   const [searchTerm, setSearchTerm] = useState('');

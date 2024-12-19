@@ -6,8 +6,8 @@ import Slider from '../components/slider/slider';
 import ProductList from '../components/catalog-cards/product-list';
 import Sorting from '../components/sorting';
 import Filter from '../components/filter';
-import { RootState } from '../store/store';
 import { BREADCRUMBS_CATALOG } from '../conts';
+import { RootState } from '../store/root-reducer';
 
 function CatalogPage() {
   const sortParams = useSelector((state: RootState) => state.sorting);

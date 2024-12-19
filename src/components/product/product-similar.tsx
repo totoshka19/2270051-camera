@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../../store/store';
+import { AppDispatch } from '../../store/store';
 import { fetchSimilarProducts } from '../../store/product-similar-slice';
 import ProductCard from '../catalog-cards/product-card';
 import Spinner from '../spinner';
 import { getNextIndex, getPrevIndex } from '../../utils';
 import { RequestStatus, SLIDES_PER_VIEW } from '../../conts';
+import { RootState } from '../../store/root-reducer';
 
 type ProductSimilarProps = {
   cameraId: number;

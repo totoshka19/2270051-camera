@@ -2,12 +2,12 @@ import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { RootState } from '../store/store';
 import Layout from '../components/layout';
 import Breadcrumbs from '../components/breadcrumbs';
 import BasketList from '../components/basket/basket-list';
 import { AppRoute, BREADCRUMBS_BASKET } from '../conts';
 import { formatPrice } from '../utils';
+import { RootState } from '../store/root-reducer';
 
 function BasketPage() {
   const navigate = useNavigate();

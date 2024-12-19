@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { RootState } from '../store/store';
 import FormSearch from './form-search/form-search';
 import { AppRoute } from '../conts';
+import { RootState } from '../store/root-reducer';
 
 function Header() {
   const basketItemsCount = useSelector((state: RootState) =>

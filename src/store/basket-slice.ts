@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Product } from '../types/product';
 import { BasketState } from '../types/state';
-import { RootState } from './store';
+import { RootState } from './root-reducer';
 
 const initialState: BasketState = {
   items: [],

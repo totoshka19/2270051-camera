@@ -1,10 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import rootReducer from './root-reducer';
 import { localStorageMiddleware } from './local-storage-middleware';
+import { BasketState } from '../types/state';
 
 const persistedBasket = localStorage.getItem('basket');
 const preloadedState = persistedBasket
-  ? { basket: JSON.parse(persistedBasket) }
+  ? { basket: JSON.parse(persistedBasket) as BasketState }
   : {};
 
 export const store = configureStore({
@@ -14,5 +15,4 @@ export const store = configureStore({
     getDefaultMiddleware().concat(localStorageMiddleware),
 });
 
-export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

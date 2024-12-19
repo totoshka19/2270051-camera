@@ -7,8 +7,8 @@ import { Product } from '../../types/product';
 import Rating from '../rating/rating';
 import { formatPrice } from '../../utils';
 import { AppRoute } from '../../conts';
-import { RootState } from '../../store/store';
 import { selectIsProductInBasket } from '../../store/basket-slice';
+import { RootState } from '../../store/root-reducer';
 
 type ProductCardProps = {
   product: Product;

@@ -3,11 +3,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import ProductCard from './product-card';
 import Spinner from '../spinner';
 import { fetchProducts } from '../../store/products-slice';
-import { AppDispatch, RootState } from '../../store/store';
+import { AppDispatch } from '../../store/store';
 import { SortParams } from '../../types/sorting';
 import { Product } from '../../types/product';
 import { sortProducts, filterProducts } from '../../utils';
 import { RequestStatus } from '../../conts';
+import { RootState } from '../../store/root-reducer';
 
 type ProductListProps = {
   sortParams: SortParams;
