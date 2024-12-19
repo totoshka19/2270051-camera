@@ -67,8 +67,6 @@ export const ERROR_MESSAGE = 'Возникла ошибка, попробуйт�
 
 export const ORDER_ERROR_MESSAGE = 'Ошибка при отправке заявки';
 
-export const PHONE_FORMAT_ERROR_MESSAGE = 'Введите номер в формате +7(9XX)XXX-XX-XX';
-
 export const Slides = [
   {
     Id: 1,
