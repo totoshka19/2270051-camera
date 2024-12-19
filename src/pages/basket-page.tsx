@@ -6,7 +6,7 @@ import Layout from '../components/layout';
 import Breadcrumbs from '../components/breadcrumbs';
 import BasketList from '../components/basket/basket-list';
 import { AppRoute, BREADCRUMBS_BASKET } from '../conts';
-import { formatPrice } from '../utils';
+import {calculateDiscount, formatPrice} from '../utils';
 import { RootState } from '../store/root-reducer';
 
 function BasketPage() {
@@ -20,6 +20,10 @@ function BasketPage() {
   }, [basketItems, navigate]);
 
   const totalPrice = basketItems.reduce((total, item) => total + item.product.price * item.quantity, 0);
+  const totalQuantity = basketItems.reduce((total, item) => total + item.quantity, 0);
+  const discountPercentage = calculateDiscount(totalPrice, totalQuantity);
+  const discountAmount = (totalPrice * discountPercentage) / 100;
+  const finalPrice = totalPrice - discountAmount;
 
   return (
     <>
@@ -47,11 +51,13 @@ function BasketPage() {
                     </p>
                     <p className="basket__summary-item">
                       <span className="basket__summary-text">Скидка:</span>
-                      <span className="basket__summary-value basket__summary-value--bonus">0 ₽</span>
+                      <span className={`basket__summary-value ${discountAmount > 0 ? 'basket__summary-value--bonus' : ''}`}>
+                        {formatPrice(discountAmount)}
+                      </span>
                     </p>
                     <p className="basket__summary-item">
                       <span className="basket__summary-text basket__summary-text--total">К оплате:</span>
-                      <span className="basket__summary-value basket__summary-value--total">{formatPrice(totalPrice)}</span>
+                      <span className="basket__summary-value basket__summary-value--total">{formatPrice(finalPrice)}</span>
                     </p>
                     <button className="btn btn--purple" type="submit">Оформить заказ
                     </button>

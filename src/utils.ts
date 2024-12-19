@@ -11,7 +11,8 @@ export function formatDate(dateString: string): string {
 }
 
 export function formatPrice(price: number) {
-  return `${price.toLocaleString('ru-RU')} ₽`;
+  const roundedPrice = Math.round(price);
+  return `${roundedPrice.toLocaleString('ru-RU')} ₽`;
 }
 
 export function getNextIndex(currentIndex: number, totalItems: number, slidesPerView: number): number {
@@ -68,4 +69,28 @@ export function filterProducts(products: Product[], filters: FilterParams): Prod
 
     return !Object.keys(level).some((lvl) => level[lvl as keyof typeof level] && product.level !== lvl);
   });
+}
+
+export function calculateDiscount(totalPrice, totalQuantity) {
+  let discount = 0;
+
+  if (totalQuantity >= 2 && totalQuantity < 3) {
+    discount = 3;
+  } else if (totalQuantity >= 3 && totalQuantity <= 5) {
+    discount = 5;
+  } else if (totalQuantity >= 6 && totalQuantity <= 10) {
+    discount = 10;
+  } else if (totalQuantity > 10) {
+    discount = 15;
+  }
+
+  if (totalPrice >= 10000 && totalPrice < 20000) {
+    discount -= 1;
+  } else if (totalPrice >= 20000 && totalPrice < 30000) {
+    discount -= 2;
+  } else if (totalPrice >= 30000) {
+    discount -= 3;
+  }
+
+  return Math.max(discount, 0);
 }
