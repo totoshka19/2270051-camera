@@ -3,13 +3,13 @@ import ProductInfoShort from './product-info-short';
 import { Product } from '../../types/product';
 import { useRef } from 'react';
 
-type PopUpProps = {
+type PopUpRemoveItemProps = {
   product: Product;
   onClose: () => void;
   onConfirm: () => void;
 };
 
-function PopUpRemoveItem({ product, onClose, onConfirm }: PopUpProps) {
+function PopUpRemoveItem({ product, onClose, onConfirm }: PopUpRemoveItemProps) {
   const modalRef = useRef<HTMLDivElement | null>(null);
   const { handleOverlayClick } = usePopUp({ onClose, modalRef });
 

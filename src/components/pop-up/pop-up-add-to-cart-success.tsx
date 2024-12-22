@@ -3,11 +3,11 @@ import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { usePopUp } from '../../hooks/use-pop-up';
 import { AppRoute } from '../../conts';
 
-type PopUpProps = {
+type PopUpAddToCartSuccessProps = {
   onClose: () => void;
 };
 
-function PopUpAddToCartSuccess({ onClose }: PopUpProps) {
+function PopUpAddToCartSuccess({ onClose }: PopUpAddToCartSuccessProps) {
   const modalRef = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
   const location = useLocation();

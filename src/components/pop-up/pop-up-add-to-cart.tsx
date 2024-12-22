@@ -6,13 +6,13 @@ import { addToBasket } from '../../store/basket-slice';
 import { AppDispatch } from '../../store/store';
 import { Product } from '../../types/product';
 
-type PopUpProps = {
+type PopUpAddToCartProps = {
   product: Product;
   onClose: () => void;
   onSuccess: () => void;
 }
 
-function PopUpAddToCart({ product, onClose, onSuccess }: PopUpProps) {
+function PopUpAddToCart({ product, onClose, onSuccess }: PopUpAddToCartProps) {
   const modalRef = useRef<HTMLDivElement | null>(null);
   const dispatch = useDispatch<AppDispatch>();
 
