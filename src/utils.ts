@@ -1,10 +1,10 @@
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
-import {Review} from './types/review';
-import {Product} from './types/product';
-import {SortParams} from './types/sorting';
-import {FilterParams} from './types/filter';
-import {SortDirection, SortType} from './conts';
+import { ReviewFormData, ReviewFormErrors, Review } from './types/review';
+import { Product } from './types/product';
+import { SortParams } from './types/sorting';
+import { FilterParams } from './types/filter';
+import { MAX_RATING_STARS, SortDirection, SortType } from './conts';
 
 export function formatDate(dateString: string): string {
   return dayjs(dateString).locale('ru').format('DD MMMM');
@@ -105,4 +105,36 @@ export function getStarTitle(value: number): string {
   };
 
   return starTitles[value] || '';
+}
+
+export function validateReviewForm({ rating, name, advantages, disadvantages, comment }: ReviewFormData): ReviewFormErrors {
+  const errors: ReviewFormErrors = {
+    ratingError: '',
+    nameError: '',
+    advantagesError: '',
+    disadvantagesError: '',
+    commentError: '',
+  };
+
+  if (rating < 1 || rating > MAX_RATING_STARS || !Number.isInteger(rating)) {
+    errors.ratingError = 'Нужно оценить товар';
+  }
+
+  if (name.trim().length < 2 || name.trim().length > 15) {
+    errors.nameError = 'Нужно указать имя';
+  }
+
+  if (advantages.trim().length < 10 || advantages.trim().length > 160) {
+    errors.advantagesError = 'Нужно указать достоинства';
+  }
+
+  if (disadvantages.trim().length < 10 || disadvantages.trim().length > 160) {
+    errors.disadvantagesError = 'Нужно указать недостатки';
+  }
+
+  if (comment.trim().length < 10 || comment.trim().length > 160) {
+    errors.commentError = 'Нужно добавить комментарий';
+  }
+
+  return errors;
 }

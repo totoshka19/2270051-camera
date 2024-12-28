@@ -8,3 +8,19 @@ export type Review = {
   review: string;
   rating: number;
 };
+
+export type ReviewFormData = {
+  rating: number;
+  name: string;
+  advantages: string;
+  disadvantages: string;
+  comment: string;
+};
+
+export type ReviewFormErrors = {
+  ratingError: string;
+  nameError: string;
+  advantagesError: string;
+  disadvantagesError: string;
+  commentError: string;
+};

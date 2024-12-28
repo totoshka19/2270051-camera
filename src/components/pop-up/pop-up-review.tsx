@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { usePopUp } from '../../hooks/use-pop-up';
-import { getRange, getStarTitle } from '../../utils';
+import { getRange, getStarTitle, validateReviewForm } from '../../utils';
 import { MAX_RATING_STARS } from '../../conts';
 
 type PopUpReviewProps = {
@@ -32,51 +32,26 @@ function PopUpReview({ onClose }: PopUpReviewProps) {
     setRatingError('');
   };
 
-  const validateForm = () => {
-    let isValid = true;
-
-    if (rating < 1 || rating > MAX_RATING_STARS || !Number.isInteger(rating)) {
-      setRatingError('Нужно оценить товар');
-      isValid = false;
-    } else {
-      setRatingError('');
-    }
-
-    if (name.trim().length < 2 || name.trim().length > 15) {
-      setNameError('Нужно указать имя');
-      isValid = false;
-    } else {
-      setNameError('');
-    }
-
-    if (advantages.trim().length < 10 || advantages.trim().length > 160) {
-      setAdvantagesError('Нужно указать достоинства');
-      isValid = false;
-    } else {
-      setAdvantagesError('');
-    }
-
-    if (disadvantages.trim().length < 10 || disadvantages.trim().length > 160) {
-      setDisadvantagesError('Нужно указать недостатки');
-      isValid = false;
-    } else {
-      setDisadvantagesError('');
-    }
-
-    if (comment.trim().length < 10 || comment.trim().length > 160) {
-      setCommentError('Нужно добавить комментарий');
-      isValid = false;
-    } else {
-      setCommentError('');
-    }
-
-    return isValid;
-  };
-
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
 
-    if (validateForm()) {
+    const errors = validateReviewForm({
+      rating,
+      name,
+      advantages,
+      disadvantages,
+      comment,
+    });
+
+    setRatingError(errors.ratingError);
+    setNameError(errors.nameError);
+    setAdvantagesError(errors.advantagesError);
+    setDisadvantagesError(errors.disadvantagesError);
+    setCommentError(errors.commentError);
+
+    const isValid = !Object.values(errors).some((error) => error !== '');
+
+    if (isValid) {
       console.log('Форма отзыва заполнена правильно');
     } else {
       console.log('Форма содержит ошибки');
