@@ -9,6 +9,16 @@ type PopUpReviewProps = {
 
 function PopUpReview({ onClose }: PopUpReviewProps) {
   const [rating, setRating] = useState(0);
+  const [name, setName] = useState('');
+  const [advantages, setAdvantages] = useState('');
+  const [disadvantages, setDisadvantages] = useState('');
+  const [comment, setComment] = useState('');
+
+  const [ratingError, setRatingError] = useState('');
+  const [nameError, setNameError] = useState('');
+  const [advantagesError, setAdvantagesError] = useState('');
+  const [disadvantagesError, setDisadvantagesError] = useState('');
+  const [commentError, setCommentError] = useState('');
 
   const modalRef = useRef<HTMLDivElement | null>(null);
 
@@ -19,6 +29,58 @@ function PopUpReview({ onClose }: PopUpReviewProps) {
 
   const handleStarClick = (value: number) => {
     setRating(value);
+    setRatingError('');
+  };
+
+  const validateForm = () => {
+    let isValid = true;
+
+    if (rating < 1 || rating > MAX_RATING_STARS || !Number.isInteger(rating)) {
+      setRatingError('Нужно оценить товар');
+      isValid = false;
+    } else {
+      setRatingError('');
+    }
+
+    if (name.trim().length < 2 || name.trim().length > 15) {
+      setNameError('Нужно указать имя');
+      isValid = false;
+    } else {
+      setNameError('');
+    }
+
+    if (advantages.trim().length < 10 || advantages.trim().length > 160) {
+      setAdvantagesError('Нужно указать достоинства');
+      isValid = false;
+    } else {
+      setAdvantagesError('');
+    }
+
+    if (disadvantages.trim().length < 10 || disadvantages.trim().length > 160) {
+      setDisadvantagesError('Нужно указать недостатки');
+      isValid = false;
+    } else {
+      setDisadvantagesError('');
+    }
+
+    if (comment.trim().length < 10 || comment.trim().length > 160) {
+      setCommentError('Нужно добавить комментарий');
+      isValid = false;
+    } else {
+      setCommentError('');
+    }
+
+    return isValid;
+  };
+
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+
+    if (validateForm()) {
+      console.log('Форма отзыва заполнена правильно');
+    } else {
+      console.log('Форма содержит ошибки');
+    }
   };
 
   const stars = getRange(1, MAX_RATING_STARS).reverse();
@@ -30,7 +92,7 @@ function PopUpReview({ onClose }: PopUpReviewProps) {
         <div className="modal__content">
           <p className="title title--h4">Оставить отзыв</p>
           <div className="form-review">
-            <form method="post">
+            <form method="post" onSubmit={handleSubmit} noValidate>
               <div className="form-review__rate">
                 <fieldset className="rate form-review__item">
                   <legend className="rate__caption">
@@ -64,7 +126,9 @@ function PopUpReview({ onClose }: PopUpReviewProps) {
                       <span className="rate__stars">{rating}</span> <span>/</span> <span className="rate__all-stars">{MAX_RATING_STARS}</span>
                     </div>
                   </div>
-                  <p className="rate__message">Нужно оценить товар</p>
+                  <p className="rate__message" style={{ opacity: ratingError ? 1 : 0 }}>
+                    {ratingError}
+                  </p>
                 </fieldset>
                 <div className="custom-input form-review__item">
                   <label>
@@ -74,9 +138,18 @@ function PopUpReview({ onClose }: PopUpReviewProps) {
                         <use xlinkHref="#icon-snowflake"></use>
                       </svg>
                     </span>
-                    <input type="text" name="user-name" placeholder="Введите ваше имя" required />
+                    <input
+                      type="text"
+                      name="user-name"
+                      placeholder="Введите ваше имя"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      required
+                    />
                   </label>
-                  <p className="custom-input__error">Нужно указать имя</p>
+                  <p className="custom-input__error" style={{ opacity: nameError ? 1 : 0 }}>
+                    {nameError}
+                  </p>
                 </div>
                 <div className="custom-input form-review__item">
                   <label>
@@ -86,9 +159,18 @@ function PopUpReview({ onClose }: PopUpReviewProps) {
                         <use xlinkHref="#icon-snowflake"></use>
                       </svg>
                     </span>
-                    <input type="text" name="user-plus" placeholder="Основные преимущества товара" required />
+                    <input
+                      type="text"
+                      name="user-plus"
+                      placeholder="Основные преимущества товара"
+                      value={advantages}
+                      onChange={(e) => setAdvantages(e.target.value)}
+                      required
+                    />
                   </label>
-                  <p className="custom-input__error">Нужно указать достоинства</p>
+                  <p className="custom-input__error" style={{ opacity: advantagesError ? 1 : 0 }}>
+                    {advantagesError}
+                  </p>
                 </div>
                 <div className="custom-input form-review__item">
                   <label>
@@ -98,9 +180,18 @@ function PopUpReview({ onClose }: PopUpReviewProps) {
                         <use xlinkHref="#icon-snowflake"></use>
                       </svg>
                     </span>
-                    <input type="text" name="user-minus" placeholder="Главные недостатки товара" required />
+                    <input
+                      type="text"
+                      name="user-minus"
+                      placeholder="Главные недостатки товара"
+                      value={disadvantages}
+                      onChange={(e) => setDisadvantages(e.target.value)}
+                      required
+                    />
                   </label>
-                  <p className="custom-input__error">Нужно указать недостатки</p>
+                  <p className="custom-input__error" style={{ opacity: disadvantagesError ? 1 : 0 }}>
+                    {disadvantagesError}
+                  </p>
                 </div>
                 <div className="custom-textarea form-review__item">
                   <label>
@@ -112,12 +203,17 @@ function PopUpReview({ onClose }: PopUpReviewProps) {
                     </span>
                     <textarea
                       name="user-comment"
-                      minLength="5"
+                      minLength={10}
                       placeholder="Поделитесь своим опытом покупки"
+                      value={comment}
+                      onChange={(e) => setComment(e.target.value)}
+                      required
                     >
                     </textarea>
                   </label>
-                  <div className="custom-textarea__error">Нужно добавить комментарий</div>
+                  <div className="custom-textarea__error" style={{ opacity: commentError ? 1 : 0 }}>
+                    {commentError}
+                  </div>
                 </div>
               </div>
               <button className="btn btn--purple form-review__btn" type="submit">
