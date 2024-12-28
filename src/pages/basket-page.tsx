@@ -7,6 +7,10 @@ import Breadcrumbs from '../components/breadcrumbs';
 import BasketList from '../components/basket/basket-list';
 import Loader from '../components/loader/loader';
 import PopUpCart from '../components/pop-up/pop-up-cart';
+import { AppDispatch } from '../store/store';
+import { RootState } from '../store/root-reducer';
+import { createOrder } from '../store/order-slice';
+import { clearBasket } from '../store/basket-slice';
 import {
   BREADCRUMBS_BASKET,
   ORDER_ERROR_MESSAGE,
@@ -16,13 +20,10 @@ import {
   AppRoute
 } from '../conts';
 import { calculateDiscount, formatPrice } from '../utils';
-import { RootState } from '../store/root-reducer';
-import { createOrder } from '../store/order-slice';
-import { clearBasket } from '../store/basket-slice';
 import { Order } from '../types/order';
-import { AppDispatch } from '../store/store';
 
 function BasketPage() {
+  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const basketItems = useSelector((state: RootState) => state.basket.items);
   const [isLoading, setIsLoading] = useState(false);
@@ -36,7 +37,6 @@ function BasketPage() {
   const finalPrice = totalPrice - discountAmount;
   const [isError, setIsError] = useState(false);
   const [isOrderButtonClicked, setIsOrderButtonClicked] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (basketItems.length === 0 && !isOrderButtonClicked) {
