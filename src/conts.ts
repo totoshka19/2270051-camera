@@ -65,7 +65,13 @@ export const LOADING_MESSAGE = 'Идет загрузка...';
 
 export const ERROR_MESSAGE = 'Возникла ошибка, попробуйте позже';
 
+export const ORDER_SUCCESS_TITLE = 'Спасибо за покупку';
+
+export const ORDER_SUCCESS_BUTTON_TEXT = 'Вернуться к покупкам';
+
 export const ORDER_ERROR_MESSAGE = 'Ошибка при отправке заявки';
+
+export const ORDER_ERROR_BUTTON_TEXT = 'Попробуйте позже';
 
 export const Slides = [
   {

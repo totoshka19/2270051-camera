@@ -1,12 +1,20 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import Layout from '../components/layout';
 import Breadcrumbs from '../components/breadcrumbs';
 import BasketList from '../components/basket/basket-list';
 import Loader from '../components/loader/loader';
 import PopUpCart from '../components/pop-up/pop-up-cart';
-import { BREADCRUMBS_BASKET } from '../conts';
+import {
+  BREADCRUMBS_BASKET,
+  ORDER_ERROR_MESSAGE,
+  ORDER_ERROR_BUTTON_TEXT,
+  ORDER_SUCCESS_BUTTON_TEXT,
+  ORDER_SUCCESS_TITLE,
+  AppRoute
+} from '../conts';
 import { calculateDiscount, formatPrice } from '../utils';
 import { RootState } from '../store/root-reducer';
 import { createOrder } from '../store/order-slice';
@@ -19,18 +27,28 @@ function BasketPage() {
   const basketItems = useSelector((state: RootState) => state.basket.items);
   const [isLoading, setIsLoading] = useState(false);
   const [isPopUpVisible, setIsPopUpVisible] = useState(false);
-  const [popUpTitle, setPopUpTitle] = useState('Спасибо за покупку');
-  const [popUpButtonText, setPopUpButtonText] = useState('Вернуться к покупкам');
+  const [popUpTitle, setPopUpTitle] = useState(ORDER_SUCCESS_TITLE);
+  const [popUpButtonText, setPopUpButtonText] = useState(ORDER_SUCCESS_BUTTON_TEXT);
   const totalPrice = basketItems.reduce((total, item) => total + item.product.price * item.quantity, 0);
   const totalQuantity = basketItems.reduce((total, item) => total + item.quantity, 0);
   const discountPercentage = calculateDiscount(totalPrice, totalQuantity);
   const discountAmount = (totalPrice * discountPercentage) / 100;
   const finalPrice = totalPrice - discountAmount;
   const [isError, setIsError] = useState(false);
+  const [isOrderButtonClicked, setIsOrderButtonClicked] = useState(false); // Флаг нажатия кнопки "Оформить заказ"
+  const navigate = useNavigate();
+
+  // Редирект на страницу каталога, если корзина пуста и кнопка "Оформить заказ" не была нажата
+  useEffect(() => {
+    if (basketItems.length === 0 && !isOrderButtonClicked) {
+      navigate(AppRoute.Catalog); // Редирект на страницу каталога
+    }
+  }, [basketItems, isOrderButtonClicked, navigate]);
 
   const handleOrderSubmit = async () => {
     setIsLoading(true);
     setIsError(false);
+    setIsOrderButtonClicked(true); // Устанавливаем флаг нажатия кнопки "Оформить заказ"
 
     try {
       const orderData: Order = {
@@ -39,14 +57,14 @@ function BasketPage() {
       };
       await dispatch(createOrder(orderData)).unwrap();
       dispatch(clearBasket());
-      setPopUpTitle('Спасибо за покупку');
-      setPopUpButtonText('Вернуться к покупкам');
-      setIsPopUpVisible(true);
+      setPopUpTitle(ORDER_SUCCESS_TITLE);
+      setPopUpButtonText(ORDER_SUCCESS_BUTTON_TEXT);
+      setIsPopUpVisible(true); // Показываем попап
     } catch {
       setIsError(true);
-      setPopUpTitle('Возникла ошибка');
-      setPopUpButtonText('Попробуйте позже');
-      setIsPopUpVisible(true);
+      setPopUpTitle(ORDER_ERROR_MESSAGE);
+      setPopUpButtonText(ORDER_ERROR_BUTTON_TEXT);
+      setIsPopUpVisible(true); // Показываем попап
     } finally {
       setIsLoading(false);
     }
@@ -54,6 +72,10 @@ function BasketPage() {
 
   const handlePopUpClose = () => {
     setIsPopUpVisible(false);
+    // После закрытия попапа, если корзина пуста, выполняем редирект
+    if (basketItems.length === 0) {
+      navigate(AppRoute.Catalog);
+    }
   };
 
   return (
