@@ -9,6 +9,8 @@ function Header() {
     state.basket.items.reduce((total, item) => total + item.quantity, 0)
   );
 
+  const basketLink = basketItemsCount > 0 ? AppRoute.Card : AppRoute.Catalog;
+
   return (
     <header className="header" id="header">
       <div className="container">
@@ -34,7 +36,11 @@ function Header() {
           </ul>
         </nav>
         <FormSearch />
-        <Link className="header__basket-link" to={AppRoute.Card}>
+        <Link
+          className="header__basket-link"
+          to={basketLink}
+          aria-label="Переход в корзину"
+        >
           <svg width="16" height="16" aria-hidden="true">
             <use xlinkHref="#icon-basket"></use>
           </svg>

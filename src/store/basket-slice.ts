@@ -28,10 +28,13 @@ const basketSlice = createSlice({
         basketItem.quantity = action.payload.quantity;
       }
     },
+    clearBasket: (state) => {
+      state.items = [];
+    },
   },
 });
 
-export const { addToBasket, removeFromBasket, updateQuantity } = basketSlice.actions;
+export const { addToBasket, removeFromBasket, updateQuantity, clearBasket } = basketSlice.actions;
 
 export const selectIsProductInBasket = (state: RootState, productId: number) =>
   state.basket.items.some((item) => item.product.id === productId);

@@ -1,29 +1,60 @@
-import { useEffect } from 'react';
+import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import Layout from '../components/layout';
 import Breadcrumbs from '../components/breadcrumbs';
 import BasketList from '../components/basket/basket-list';
-import { AppRoute, BREADCRUMBS_BASKET } from '../conts';
-import {calculateDiscount, formatPrice} from '../utils';
+import Loader from '../components/loader/loader';
+import PopUpCart from '../components/pop-up/pop-up-cart';
+import { BREADCRUMBS_BASKET } from '../conts';
+import { calculateDiscount, formatPrice } from '../utils';
 import { RootState } from '../store/root-reducer';
+import { createOrder } from '../store/order-slice';
+import { clearBasket } from '../store/basket-slice';
+import { Order } from '../types/order';
 
 function BasketPage() {
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const basketItems = useSelector((state: RootState) => state.basket.items);
-
-  useEffect(() => {
-    if (basketItems.length === 0) {
-      navigate(AppRoute.Catalog);
-    }
-  }, [basketItems, navigate]);
-
+  const [selectedCoupon, setSelectedCoupon] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isPopUpVisible, setIsPopUpVisible] = useState(false);
+  const [popUpTitle, setPopUpTitle] = useState('Спасибо за покупку');
+  const [popUpButtonText, setPopUpButtonText] = useState('Вернуться к покупкам');
   const totalPrice = basketItems.reduce((total, item) => total + item.product.price * item.quantity, 0);
   const totalQuantity = basketItems.reduce((total, item) => total + item.quantity, 0);
   const discountPercentage = calculateDiscount(totalPrice, totalQuantity);
   const discountAmount = (totalPrice * discountPercentage) / 100;
   const finalPrice = totalPrice - discountAmount;
+  const [isError, setIsError] = useState(false);
+
+  const handleOrderSubmit = async () => {
+    setIsLoading(true);
+    setIsError(false);
+
+    try {
+      const orderData: Order = {
+        camerasIds: basketItems.map((item) => item.product.id),
+        coupon: selectedCoupon,
+      };
+      await dispatch(createOrder(orderData)).unwrap();
+      dispatch(clearBasket());
+      setPopUpTitle('Спасибо за покупку');
+      setPopUpButtonText('Вернуться к покупкам');
+      setIsPopUpVisible(true);
+    } catch {
+      setIsError(true); // Устанавливаем ошибку
+      setPopUpTitle('Возникла ошибка');
+      setPopUpButtonText('Попробуйте позже');
+      setIsPopUpVisible(true);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handlePopUpClose = () => {
+    setIsPopUpVisible(false);
+  };
 
   return (
     <>
@@ -42,8 +73,7 @@ function BasketPage() {
                 <BasketList />
 
                 <div className="basket__summary">
-                  <div className="basket__promo">
-                  </div>
+                  <div className="basket__promo"></div>
                   <div className="basket__summary-order">
                     <p className="basket__summary-item">
                       <span className="basket__summary-text">Всего:</span>
@@ -59,7 +89,13 @@ function BasketPage() {
                       <span className="basket__summary-text basket__summary-text--total">К оплате:</span>
                       <span className="basket__summary-value basket__summary-value--total">{formatPrice(finalPrice)}</span>
                     </p>
-                    <button className="btn btn--purple" type="submit">Оформить заказ
+                    <button
+                      className="btn btn--purple"
+                      type="submit"
+                      onClick={handleOrderSubmit}
+                      disabled={isLoading || basketItems.length === 0}
+                    >
+                      Оформить заказ
                     </button>
                   </div>
                 </div>
@@ -68,6 +104,17 @@ function BasketPage() {
           </div>
         </main>
       </Layout>
+
+      {isLoading && <Loader />}
+
+      {isPopUpVisible && (
+        <PopUpCart
+          onClose={handlePopUpClose}
+          title={popUpTitle}
+          buttonText={popUpButtonText}
+          iconType={isError ? 'error' : 'success'}
+        />
+      )}
     </>
   );
 }
