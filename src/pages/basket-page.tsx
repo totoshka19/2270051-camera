@@ -35,20 +35,19 @@ function BasketPage() {
   const discountAmount = (totalPrice * discountPercentage) / 100;
   const finalPrice = totalPrice - discountAmount;
   const [isError, setIsError] = useState(false);
-  const [isOrderButtonClicked, setIsOrderButtonClicked] = useState(false); // Флаг нажатия кнопки "Оформить заказ"
+  const [isOrderButtonClicked, setIsOrderButtonClicked] = useState(false);
   const navigate = useNavigate();
 
-  // Редирект на страницу каталога, если корзина пуста и кнопка "Оформить заказ" не была нажата
   useEffect(() => {
     if (basketItems.length === 0 && !isOrderButtonClicked) {
-      navigate(AppRoute.Catalog); // Редирект на страницу каталога
+      navigate(AppRoute.Catalog);
     }
   }, [basketItems, isOrderButtonClicked, navigate]);
 
   const handleOrderSubmit = async () => {
     setIsLoading(true);
     setIsError(false);
-    setIsOrderButtonClicked(true); // Устанавливаем флаг нажатия кнопки "Оформить заказ"
+    setIsOrderButtonClicked(true);
 
     try {
       const orderData: Order = {
@@ -59,12 +58,12 @@ function BasketPage() {
       dispatch(clearBasket());
       setPopUpTitle(ORDER_SUCCESS_TITLE);
       setPopUpButtonText(ORDER_SUCCESS_BUTTON_TEXT);
-      setIsPopUpVisible(true); // Показываем попап
+      setIsPopUpVisible(true);
     } catch {
       setIsError(true);
       setPopUpTitle(ORDER_ERROR_MESSAGE);
       setPopUpButtonText(ORDER_ERROR_BUTTON_TEXT);
-      setIsPopUpVisible(true); // Показываем попап
+      setIsPopUpVisible(true);
     } finally {
       setIsLoading(false);
     }
@@ -72,7 +71,6 @@ function BasketPage() {
 
   const handlePopUpClose = () => {
     setIsPopUpVisible(false);
-    // После закрытия попапа, если корзина пуста, выполняем редирект
     if (basketItems.length === 0) {
       navigate(AppRoute.Catalog);
     }
