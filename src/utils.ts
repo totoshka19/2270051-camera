@@ -94,3 +94,15 @@ export function calculateDiscount(totalPrice, totalQuantity) {
 
   return Math.max(discount, 0);
 }
+
+export function getStarTitle(value: number): string {
+  const starTitles: { [key: number]: string } = {
+    5: 'Отлично',
+    4: 'Хорошо',
+    3: 'Нормально',
+    2: 'Плохо',
+    1: 'Ужасно',
+  };
+
+  return starTitles[value] || '';
+}

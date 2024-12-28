@@ -1,14 +1,14 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { usePopUp } from '../../hooks/use-pop-up';
-import StarRating from '../rating/star-rating';
+import { getRange, getStarTitle } from '../../utils';
+import { MAX_RATING_STARS } from '../../conts';
 
 type PopUpReviewProps = {
   onClose: () => void;
 };
 
 function PopUpReview({ onClose }: PopUpReviewProps) {
-  const rating = 0;
-  const id = 'popup-review';
+  const [rating, setRating] = useState(0);
 
   const modalRef = useRef<HTMLDivElement | null>(null);
 
@@ -16,6 +16,12 @@ function PopUpReview({ onClose }: PopUpReviewProps) {
     onClose,
     modalRef,
   });
+
+  const handleStarClick = (value: number) => {
+    setRating(value);
+  };
+
+  const stars = getRange(1, MAX_RATING_STARS).reverse();
 
   return (
     <div className="modal is-active" ref={modalRef}>
@@ -27,24 +33,43 @@ function PopUpReview({ onClose }: PopUpReviewProps) {
             <form method="post">
               <div className="form-review__rate">
                 <fieldset className="rate form-review__item">
-                  <legend className="rate__caption">Рейтинг
+                  <legend className="rate__caption">
+                    Рейтинг
                     <svg width="9" height="9" aria-hidden="true">
                       <use xlinkHref="#icon-snowflake"></use>
                     </svg>
                   </legend>
                   <div className="rate__bar">
                     <div className="rate__group">
-                      <StarRating rating={rating} id={id} />
+                      {stars.map((value) => (
+                        <React.Fragment key={value}>
+                          <input
+                            className="visually-hidden"
+                            id={`star-${value}`}
+                            name="rate"
+                            type="radio"
+                            value={value}
+                            onChange={() => handleStarClick(value)}
+                          />
+                          <label
+                            className="rate__label"
+                            htmlFor={`star-${value}`}
+                            title={getStarTitle(value)}
+                          >
+                          </label>
+                        </React.Fragment>
+                      ))}
                     </div>
                     <div className="rate__progress">
-                      <span className="rate__stars">{rating}</span> <span>/</span> <span className="rate__all-stars">5</span>
+                      <span className="rate__stars">{rating}</span> <span>/</span> <span className="rate__all-stars">{MAX_RATING_STARS}</span>
                     </div>
                   </div>
                   <p className="rate__message">Нужно оценить товар</p>
                 </fieldset>
                 <div className="custom-input form-review__item">
                   <label>
-                    <span className="custom-input__label">Ваше имя
+                    <span className="custom-input__label">
+                      Ваше имя
                       <svg width="9" height="9" aria-hidden="true">
                         <use xlinkHref="#icon-snowflake"></use>
                       </svg>
@@ -55,7 +80,8 @@ function PopUpReview({ onClose }: PopUpReviewProps) {
                 </div>
                 <div className="custom-input form-review__item">
                   <label>
-                    <span className="custom-input__label">Достоинства
+                    <span className="custom-input__label">
+                      Достоинства
                       <svg width="9" height="9" aria-hidden="true">
                         <use xlinkHref="#icon-snowflake"></use>
                       </svg>
@@ -66,7 +92,8 @@ function PopUpReview({ onClose }: PopUpReviewProps) {
                 </div>
                 <div className="custom-input form-review__item">
                   <label>
-                    <span className="custom-input__label">Недостатки
+                    <span className="custom-input__label">
+                      Недостатки
                       <svg width="9" height="9" aria-hidden="true">
                         <use xlinkHref="#icon-snowflake"></use>
                       </svg>
@@ -77,17 +104,25 @@ function PopUpReview({ onClose }: PopUpReviewProps) {
                 </div>
                 <div className="custom-textarea form-review__item">
                   <label>
-                    <span className="custom-textarea__label">Комментарий
+                    <span className="custom-textarea__label">
+                      Комментарий
                       <svg width="9" height="9" aria-hidden="true">
                         <use xlinkHref="#icon-snowflake"></use>
                       </svg>
                     </span>
-                    <textarea name="user-comment" minLength="5" placeholder="Поделитесь своим опытом покупки"></textarea>
+                    <textarea
+                      name="user-comment"
+                      minLength="5"
+                      placeholder="Поделитесь своим опытом покупки"
+                    >
+                    </textarea>
                   </label>
                   <div className="custom-textarea__error">Нужно добавить комментарий</div>
                 </div>
               </div>
-              <button className="btn btn--purple form-review__btn" type="submit">Отправить отзыв</button>
+              <button className="btn btn--purple form-review__btn" type="submit">
+                Отправить отзыв
+              </button>
             </form>
           </div>
           <button
