@@ -72,7 +72,7 @@ function PopUpReview({ onClose, cameraId }: PopUpReviewProps) {
             review: comment,
             rating,
           })
-        ).unwrap();
+        );
 
         onClose();
       } finally {
