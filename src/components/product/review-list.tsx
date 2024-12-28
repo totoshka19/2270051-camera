@@ -1,5 +1,7 @@
+import React, { useState } from 'react';
 import ReviewItem from './review-item';
 import { Review } from '../../types/review';
+import PopUpReview from '../pop-up/pop-up-review';
 
 type ReviewListProps = {
   reviews: Review[];
@@ -8,13 +10,23 @@ type ReviewListProps = {
 };
 
 function ReviewList({ reviews, onShowMore, showMoreButton }: ReviewListProps) {
+  const [isPopUpVisible, setIsPopUpVisible] = useState(false);
+
+  const handleOpenPopUp = () => {
+    setIsPopUpVisible(true);
+  };
+
+  const handleClosePopUp = () => {
+    setIsPopUpVisible(false);
+  };
+
   return (
     <div className="page-content__section">
       <section className="review-block">
         <div className="container">
           <div className="page-content__headed">
             <h2 className="title title--h3">Отзывы</h2>
-            <button className="btn" type="button">Оставить свой отзыв</button>
+            <button className="btn" type="button" onClick={handleOpenPopUp}>Оставить свой отзыв</button>
           </div>
           <ul className="review-block__list">
             {reviews.map((review) => (
@@ -28,6 +40,8 @@ function ReviewList({ reviews, onShowMore, showMoreButton }: ReviewListProps) {
           )}
         </div>
       </section>
+
+      {isPopUpVisible && <PopUpReview onClose={handleClosePopUp} />}
     </div>
   );
 }
