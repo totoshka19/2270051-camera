@@ -18,6 +18,7 @@ export type ProductsState = {
 export type ReviewsState = {
   reviews: Review[];
   status: typeof RequestStatus[keyof typeof RequestStatus];
+  postStatus: typeof RequestStatus[keyof typeof RequestStatus];
   error: string | null;
 }
 

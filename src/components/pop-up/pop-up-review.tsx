@@ -5,6 +5,7 @@ import { MAX_RATING_STARS } from '../../conts';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../store/store';
 import {postReview} from '../../store/reviews-slice';
+import Loader from '../loader/loader';
 
 type PopUpReviewProps = {
   onClose: () => void;
@@ -24,6 +25,8 @@ function PopUpReview({ onClose, cameraId }: PopUpReviewProps) {
   const [advantagesError, setAdvantagesError] = useState('');
   const [disadvantagesError, setDisadvantagesError] = useState('');
   const [commentError, setCommentError] = useState('');
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const modalRef = useRef<HTMLDivElement | null>(null);
 
@@ -57,6 +60,8 @@ function PopUpReview({ onClose, cameraId }: PopUpReviewProps) {
     const isValid = !Object.values(errors).some((error) => error !== '');
 
     if (isValid) {
+      setIsSubmitting(true);
+
       try {
         await dispatch(
           postReview({
@@ -69,13 +74,10 @@ function PopUpReview({ onClose, cameraId }: PopUpReviewProps) {
           })
         ).unwrap();
 
-        console.log('Отзыв успешно отправлен');
         onClose();
-      } catch (error) {
-        console.error('Ошибка при отправке отзыва:', error);
+      } finally {
+        setIsSubmitting(false);
       }
-    } else {
-      console.log('Форма содержит ошибки');
     }
   };
 
@@ -212,8 +214,8 @@ function PopUpReview({ onClose, cameraId }: PopUpReviewProps) {
                   </div>
                 </div>
               </div>
-              <button className="btn btn--purple form-review__btn" type="submit">
-                Отправить отзыв
+              <button className="btn btn--purple form-review__btn" type="submit" disabled={isSubmitting}>
+                {isSubmitting ? <Loader /> : 'Отправить отзыв'}
               </button>
             </form>
           </div>

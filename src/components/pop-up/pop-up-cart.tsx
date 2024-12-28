@@ -5,7 +5,7 @@ type PopUpCartProps = {
   onClose: () => void;
   title: string;
   buttonText: string;
-  iconType?: 'success' | 'error'; // Новый пропс для определения типа иконки
+  iconType: 'success' | 'error';
 };
 
 function PopUpCart({ onClose, title, buttonText, iconType = 'success' }: PopUpCartProps) {

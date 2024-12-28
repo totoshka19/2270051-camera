@@ -33,7 +33,6 @@ const reviewsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      // Обработка получения отзывов
       .addCase(fetchReviews.pending, (state) => {
         state.status = RequestStatus.Loading;
       })
@@ -45,7 +44,6 @@ const reviewsSlice = createSlice({
         state.status = RequestStatus.Failed;
         state.error = action.error.message ? action.error.message : null;
       })
-
       .addCase(postReview.pending, (state) => {
         state.postStatus = RequestStatus.Loading;
       })
