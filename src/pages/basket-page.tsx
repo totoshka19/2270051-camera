@@ -12,11 +12,11 @@ import { RootState } from '../store/root-reducer';
 import { createOrder } from '../store/order-slice';
 import { clearBasket } from '../store/basket-slice';
 import { Order } from '../types/order';
+import { AppDispatch } from '../store/store';
 
 function BasketPage() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const basketItems = useSelector((state: RootState) => state.basket.items);
-  const [selectedCoupon, setSelectedCoupon] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isPopUpVisible, setIsPopUpVisible] = useState(false);
   const [popUpTitle, setPopUpTitle] = useState('Спасибо за покупку');
@@ -35,7 +35,7 @@ function BasketPage() {
     try {
       const orderData: Order = {
         camerasIds: basketItems.map((item) => item.product.id),
-        coupon: selectedCoupon,
+        coupon: null,
       };
       await dispatch(createOrder(orderData)).unwrap();
       dispatch(clearBasket());
@@ -43,7 +43,7 @@ function BasketPage() {
       setPopUpButtonText('Вернуться к покупкам');
       setIsPopUpVisible(true);
     } catch {
-      setIsError(true); // Устанавливаем ошибку
+      setIsError(true);
       setPopUpTitle('Возникла ошибка');
       setPopUpButtonText('Попробуйте позже');
       setIsPopUpVisible(true);
@@ -92,7 +92,7 @@ function BasketPage() {
                     <button
                       className="btn btn--purple"
                       type="submit"
-                      onClick={handleOrderSubmit}
+                      onClick={() => void handleOrderSubmit()}
                       disabled={isLoading || basketItems.length === 0}
                     >
                       Оформить заказ
