@@ -9,6 +9,15 @@ export type Review = {
   rating: number;
 };
 
+export type NewReview = {
+  cameraId: number;
+  userName: string;
+  advantage: string;
+  disadvantage: string;
+  review: string;
+  rating: number;
+};
+
 export type ReviewFormData = {
   rating: number;
   name: string;

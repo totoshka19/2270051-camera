@@ -7,9 +7,10 @@ type ReviewListProps = {
   reviews: Review[];
   onShowMore: () => void;
   showMoreButton: boolean;
+  cameraId: number;
 };
 
-function ReviewList({ reviews, onShowMore, showMoreButton }: ReviewListProps) {
+function ReviewList({ reviews, onShowMore, showMoreButton, cameraId }: ReviewListProps) {
   const [isPopUpVisible, setIsPopUpVisible] = useState(false);
 
   const handleOpenPopUp = () => {
@@ -41,7 +42,7 @@ function ReviewList({ reviews, onShowMore, showMoreButton }: ReviewListProps) {
         </div>
       </section>
 
-      {isPopUpVisible && <PopUpReview onClose={handleClosePopUp} />}
+      {isPopUpVisible && <PopUpReview onClose={handleClosePopUp} cameraId={cameraId} />}
     </div>
   );
 }

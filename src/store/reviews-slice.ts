@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { Review } from '../types/review';
-import {ApiRoute, RequestStatus, URL_API} from '../conts';
-import {ReviewsState} from '../types/state';
+import { NewReview, Review } from '../types/review';
+import { ApiRoute, RequestStatus, URL_API } from '../conts';
+import { ReviewsState } from '../types/state';
 
 export const fetchReviews = createAsyncThunk<Review[], number>(
   'reviews/fetchReviews',
@@ -12,9 +12,18 @@ export const fetchReviews = createAsyncThunk<Review[], number>(
   }
 );
 
+export const postReview = createAsyncThunk<Review, NewReview>(
+  'reviews/postReview',
+  async (newReview) => {
+    const response = await axios.post<Review>(`${URL_API}/reviews`, newReview);
+    return response.data;
+  }
+);
+
 const initialState: ReviewsState = {
   reviews: [],
   status: RequestStatus.Idle,
+  postStatus: RequestStatus.Idle,
   error: null,
 };
 
@@ -24,6 +33,7 @@ const reviewsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      // Обработка получения отзывов
       .addCase(fetchReviews.pending, (state) => {
         state.status = RequestStatus.Loading;
       })
@@ -33,6 +43,18 @@ const reviewsSlice = createSlice({
       })
       .addCase(fetchReviews.rejected, (state, action) => {
         state.status = RequestStatus.Failed;
+        state.error = action.error.message ? action.error.message : null;
+      })
+
+      .addCase(postReview.pending, (state) => {
+        state.postStatus = RequestStatus.Loading;
+      })
+      .addCase(postReview.fulfilled, (state, action) => {
+        state.postStatus = RequestStatus.Succeeded;
+        state.reviews.push(action.payload);
+      })
+      .addCase(postReview.rejected, (state, action) => {
+        state.postStatus = RequestStatus.Failed;
         state.error = action.error.message ? action.error.message : null;
       });
   },

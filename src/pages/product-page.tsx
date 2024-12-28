@@ -75,6 +75,7 @@ function ProductPage() {
               reviews={sortedReviews.slice(0, visibleReviews)}
               onShowMore={handleShowMoreReviews}
               showMoreButton={showMoreButton}
+              cameraId={product.id}
             />
 
           </div>

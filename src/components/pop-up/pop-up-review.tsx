@@ -2,12 +2,17 @@ import React, { useRef, useState } from 'react';
 import { usePopUp } from '../../hooks/use-pop-up';
 import { getRange, getStarTitle, validateReviewForm } from '../../utils';
 import { MAX_RATING_STARS } from '../../conts';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../store/store';
+import {postReview} from '../../store/reviews-slice';
 
 type PopUpReviewProps = {
   onClose: () => void;
+  cameraId: number;
 };
 
-function PopUpReview({ onClose }: PopUpReviewProps) {
+function PopUpReview({ onClose, cameraId }: PopUpReviewProps) {
+  const dispatch = useDispatch<AppDispatch>();
   const [rating, setRating] = useState(0);
   const [name, setName] = useState('');
   const [advantages, setAdvantages] = useState('');
@@ -32,7 +37,7 @@ function PopUpReview({ onClose }: PopUpReviewProps) {
     setRatingError('');
   };
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
     const errors = validateReviewForm({
@@ -52,7 +57,23 @@ function PopUpReview({ onClose }: PopUpReviewProps) {
     const isValid = !Object.values(errors).some((error) => error !== '');
 
     if (isValid) {
-      console.log('Форма отзыва заполнена правильно');
+      try {
+        await dispatch(
+          postReview({
+            cameraId,
+            userName: name,
+            advantage: advantages,
+            disadvantage: disadvantages,
+            review: comment,
+            rating,
+          })
+        ).unwrap();
+
+        console.log('Отзыв успешно отправлен');
+        onClose();
+      } catch (error) {
+        console.error('Ошибка при отправке отзыва:', error);
+      }
     } else {
       console.log('Форма содержит ошибки');
     }
