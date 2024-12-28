@@ -19,8 +19,8 @@ function PopUpReview({ onClose }: PopUpReviewProps) {
 
   return (
     <div className="modal is-active" ref={modalRef}>
-      <div className="modal__wrapper" onClick={handleOverlayClick}>
-        <div className="modal__overlay"></div>
+      <div className="modal__wrapper">
+        <div className="modal__overlay" onClick={handleOverlayClick}></div>
         <div className="modal__content">
           <p className="title title--h4">Оставить отзыв</p>
           <div className="form-review">
