@@ -4,7 +4,15 @@ import { ReviewFormData, ReviewFormErrors, Review } from './types/review';
 import { Product } from './types/product';
 import { SortParams } from './types/sorting';
 import { FilterParams } from './types/filter';
-import { MAX_RATING_STARS, SortDirection, SortType } from './conts';
+import {
+  ERROR_MESSAGES,
+  MAX_NAME_LENGTH,
+  MAX_RATING_STARS, MAX_TEXT_LENGTH,
+  MIN_NAME_LENGTH, MIN_TEXT_LENGTH,
+  SortDirection,
+  SortType,
+  STAR_TITLES
+} from './conts';
 
 export function formatDate(dateString: string): string {
   return dayjs(dateString).locale('ru').format('DD MMMM');
@@ -96,18 +104,16 @@ export function calculateDiscount(totalPrice, totalQuantity) {
 }
 
 export function getStarTitle(value: number): string {
-  const starTitles: { [key: number]: string } = {
-    5: 'Отлично',
-    4: 'Хорошо',
-    3: 'Нормально',
-    2: 'Плохо',
-    1: 'Ужасно',
-  };
-
-  return starTitles[value] || '';
+  return STAR_TITLES[value] || '';
 }
 
-export function validateReviewForm({ rating, name, advantages, disadvantages, comment }: ReviewFormData): ReviewFormErrors {
+export function validateReviewForm({
+  rating,
+  name,
+  advantages,
+  disadvantages,
+  comment,
+}: ReviewFormData): ReviewFormErrors {
   const errors: ReviewFormErrors = {
     ratingError: '',
     nameError: '',
@@ -117,23 +123,23 @@ export function validateReviewForm({ rating, name, advantages, disadvantages, co
   };
 
   if (rating < 1 || rating > MAX_RATING_STARS || !Number.isInteger(rating)) {
-    errors.ratingError = 'Нужно оценить товар';
+    errors.ratingError = ERROR_MESSAGES.rating;
   }
 
-  if (name.trim().length < 2 || name.trim().length > 15) {
-    errors.nameError = 'Нужно указать имя';
+  if (name.trim().length < MIN_NAME_LENGTH || name.trim().length > MAX_NAME_LENGTH) {
+    errors.nameError = ERROR_MESSAGES.name;
   }
 
-  if (advantages.trim().length < 10 || advantages.trim().length > 160) {
-    errors.advantagesError = 'Нужно указать достоинства';
+  if (advantages.trim().length < MIN_TEXT_LENGTH || advantages.trim().length > MAX_TEXT_LENGTH) {
+    errors.advantagesError = ERROR_MESSAGES.advantages;
   }
 
-  if (disadvantages.trim().length < 10 || disadvantages.trim().length > 160) {
-    errors.disadvantagesError = 'Нужно указать недостатки';
+  if (disadvantages.trim().length < MIN_TEXT_LENGTH || disadvantages.trim().length > MAX_TEXT_LENGTH) {
+    errors.disadvantagesError = ERROR_MESSAGES.disadvantages;
   }
 
-  if (comment.trim().length < 10 || comment.trim().length > 160) {
-    errors.commentError = 'Нужно добавить комментарий';
+  if (comment.trim().length < MIN_TEXT_LENGTH || comment.trim().length > MAX_TEXT_LENGTH) {
+    errors.commentError = ERROR_MESSAGES.comment;
   }
 
   return errors;

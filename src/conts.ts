@@ -73,6 +73,28 @@ export const ORDER_ERROR_MESSAGE = 'Ошибка при отправке зая�
 
 export const ORDER_ERROR_BUTTON_TEXT = 'Попробуйте позже';
 
+export const MIN_NAME_LENGTH = 2;
+export const MAX_NAME_LENGTH = 15;
+
+export const MIN_TEXT_LENGTH = 10;
+export const MAX_TEXT_LENGTH = 160;
+
+export const STAR_TITLES: { [key: number]: string } = {
+  5: 'Отлично',
+  4: 'Хорошо',
+  3: 'Нормально',
+  2: 'Плохо',
+  1: 'Ужасно',
+};
+
+export const ERROR_MESSAGES = {
+  rating: 'Нужно оценить товар',
+  name: 'Нужно указать имя',
+  advantages: 'Нужно указать достоинства',
+  disadvantages: 'Нужно указать недостатки',
+  comment: 'Нужно добавить комментарий',
+};
+
 export const Slides = [
   {
     Id: 1,
