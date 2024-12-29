@@ -1,18 +1,24 @@
 import React, { useRef, useState } from 'react';
 import { usePopUp } from '../../hooks/use-pop-up';
 import { getRange, getStarTitle, validateReviewForm } from '../../utils';
-import { MAX_RATING_STARS } from '../../conts';
+import {
+  ERROR_BUTTON_TEXT,
+  MAX_RATING_STARS,
+  REVIEW_ERROR_MESSAGE,
+  REVIEW_SUCCESS_TITLE,
+  SUCCESS_BUTTON_TEXT
+} from '../../conts';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../store/store';
-import {postReview} from '../../store/reviews-slice';
-import Loader from '../loader/loader';
+import { postReview } from '../../store/reviews-slice';
 
 type PopUpReviewProps = {
   onClose: () => void;
   cameraId: number;
+  onShowPopUpCart: (title: string, buttonText: string, iconType: 'success' | 'error') => void;
 };
 
-function PopUpReview({ onClose, cameraId }: PopUpReviewProps) {
+function PopUpReview({ onClose, cameraId, onShowPopUpCart }: PopUpReviewProps) {
   const dispatch = useDispatch<AppDispatch>();
   const [rating, setRating] = useState(0);
   const [name, setName] = useState('');
@@ -72,9 +78,12 @@ function PopUpReview({ onClose, cameraId }: PopUpReviewProps) {
             review: comment,
             rating,
           })
-        );
+        ).unwrap();
 
+        onShowPopUpCart(REVIEW_SUCCESS_TITLE, SUCCESS_BUTTON_TEXT, 'success');
         onClose();
+      } catch (error) {
+        onShowPopUpCart(REVIEW_ERROR_MESSAGE, ERROR_BUTTON_TEXT, 'error');
       } finally {
         setIsSubmitting(false);
       }
@@ -215,7 +224,7 @@ function PopUpReview({ onClose, cameraId }: PopUpReviewProps) {
                 </div>
               </div>
               <button className="btn btn--purple form-review__btn" type="submit" disabled={isSubmitting}>
-                {isSubmitting ? <Loader /> : 'Отправить отзыв'}
+                Отправить отзыв
               </button>
             </form>
           </div>

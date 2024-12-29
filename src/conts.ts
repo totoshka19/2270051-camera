@@ -67,11 +67,15 @@ export const ERROR_MESSAGE = 'Возникла ошибка, попробуйт�
 
 export const ORDER_SUCCESS_TITLE = 'Спасибо за покупку';
 
-export const ORDER_SUCCESS_BUTTON_TEXT = 'Вернуться к покупкам';
+export const REVIEW_SUCCESS_TITLE = 'Спасибо за отзыв';
+
+export const SUCCESS_BUTTON_TEXT = 'Вернуться к покупкам';
 
 export const ORDER_ERROR_MESSAGE = 'Ошибка при отправке заявки';
 
-export const ORDER_ERROR_BUTTON_TEXT = 'Попробуйте позже';
+export const REVIEW_ERROR_MESSAGE = 'Ошибка при отправке отзыва';
+
+export const ERROR_BUTTON_TEXT = 'Попробуйте позже';
 
 export const MIN_NAME_LENGTH = 2;
 export const MAX_NAME_LENGTH = 15;

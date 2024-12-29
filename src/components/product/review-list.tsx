@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import ReviewItem from './review-item';
 import { Review } from '../../types/review';
 import PopUpReview from '../pop-up/pop-up-review';
+import PopUpCart from '../pop-up/pop-up-cart';
 
 type ReviewListProps = {
   reviews: Review[];
@@ -12,6 +13,12 @@ type ReviewListProps = {
 
 function ReviewList({ reviews, onShowMore, showMoreButton, cameraId }: ReviewListProps) {
   const [isPopUpVisible, setIsPopUpVisible] = useState(false);
+  const [isPopUpCartVisible, setIsPopUpCartVisible] = useState(false);
+  const [popUpCartProps, setPopUpCartProps] = useState({
+    title: '',
+    buttonText: '',
+    iconType: 'success' as 'success' | 'error',
+  });
 
   const handleOpenPopUp = () => {
     setIsPopUpVisible(true);
@@ -19,6 +26,15 @@ function ReviewList({ reviews, onShowMore, showMoreButton, cameraId }: ReviewLis
 
   const handleClosePopUp = () => {
     setIsPopUpVisible(false);
+  };
+
+  const handleShowPopUpCart = (title: string, buttonText: string, iconType: 'success' | 'error') => {
+    setPopUpCartProps({ title, buttonText, iconType });
+    setIsPopUpCartVisible(true);
+  };
+
+  const handleClosePopUpCart = () => {
+    setIsPopUpCartVisible(false);
   };
 
   return (
@@ -42,7 +58,22 @@ function ReviewList({ reviews, onShowMore, showMoreButton, cameraId }: ReviewLis
         </div>
       </section>
 
-      {isPopUpVisible && <PopUpReview onClose={handleClosePopUp} cameraId={cameraId} />}
+      {isPopUpVisible && (
+        <PopUpReview
+          onClose={handleClosePopUp}
+          cameraId={cameraId}
+          onShowPopUpCart={handleShowPopUpCart}
+        />
+      )}
+
+      {isPopUpCartVisible && (
+        <PopUpCart
+          onClose={handleClosePopUpCart}
+          title={popUpCartProps.title}
+          buttonText={popUpCartProps.buttonText}
+          iconType={popUpCartProps.iconType}
+        />
+      )}
     </div>
   );
 }

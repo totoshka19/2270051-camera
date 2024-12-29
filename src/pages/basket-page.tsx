@@ -14,8 +14,8 @@ import { clearBasket } from '../store/basket-slice';
 import {
   BREADCRUMBS_BASKET,
   ORDER_ERROR_MESSAGE,
-  ORDER_ERROR_BUTTON_TEXT,
-  ORDER_SUCCESS_BUTTON_TEXT,
+  ERROR_BUTTON_TEXT,
+  SUCCESS_BUTTON_TEXT,
   ORDER_SUCCESS_TITLE,
   AppRoute
 } from '../conts';
@@ -29,7 +29,7 @@ function BasketPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [isPopUpVisible, setIsPopUpVisible] = useState(false);
   const [popUpTitle, setPopUpTitle] = useState(ORDER_SUCCESS_TITLE);
-  const [popUpButtonText, setPopUpButtonText] = useState(ORDER_SUCCESS_BUTTON_TEXT);
+  const [popUpButtonText, setPopUpButtonText] = useState(SUCCESS_BUTTON_TEXT);
   const totalPrice = basketItems.reduce((total, item) => total + item.product.price * item.quantity, 0);
   const totalQuantity = basketItems.reduce((total, item) => total + item.quantity, 0);
   const discountPercentage = calculateDiscount(totalPrice, totalQuantity);
@@ -57,12 +57,12 @@ function BasketPage() {
       await dispatch(createOrder(orderData)).unwrap();
       dispatch(clearBasket());
       setPopUpTitle(ORDER_SUCCESS_TITLE);
-      setPopUpButtonText(ORDER_SUCCESS_BUTTON_TEXT);
+      setPopUpButtonText(SUCCESS_BUTTON_TEXT);
       setIsPopUpVisible(true);
     } catch {
       setIsError(true);
       setPopUpTitle(ORDER_ERROR_MESSAGE);
-      setPopUpButtonText(ORDER_ERROR_BUTTON_TEXT);
+      setPopUpButtonText(ERROR_BUTTON_TEXT);
       setIsPopUpVisible(true);
     } finally {
       setIsLoading(false);
