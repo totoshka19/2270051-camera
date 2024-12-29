@@ -99,7 +99,7 @@ function PopUpReview({ onClose, cameraId, onShowPopUpCart }: PopUpReviewProps) {
         <div className="modal__content">
           <p className="title title--h4">Оставить отзыв</p>
           <div className="form-review">
-            <form method="post" onSubmit={handleSubmit} noValidate>
+            <form method="post" onSubmit={(e) => void handleSubmit(e)} noValidate>
               <div className="form-review__rate">
                 <fieldset className="rate form-review__item">
                   <legend className="rate__caption">
